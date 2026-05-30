@@ -1,9 +1,10 @@
-import pytest
 from analyzer import validate_analysis_response
 
+
 def test_validate_analysis_response_success():
-    """Test with a perfectly formatted dictionary. This should return true when validated"""
-    
+    """Test with a perfectly formatted dictionary. 
+    This should return true when validated"""
+
     valid_data = {
         "big_o": {
             "time": "O(n)",
@@ -15,6 +16,7 @@ def test_validate_analysis_response_success():
     }
     assert validate_analysis_response(valid_data) is True
 
+
 def test_validate_analysis_response_missing_key():
     """Test that it fails if a top-level key is missing."""
     invalid_data = {
@@ -22,6 +24,7 @@ def test_validate_analysis_response_missing_key():
         # "flaws" and "suggestions" are missing
     }
     assert validate_analysis_response(invalid_data) is False
+
 
 def test_validate_analysis_response_wrong_type():
     """Test that it fails if 'flaws' is a string instead of a list."""
@@ -31,4 +34,3 @@ def test_validate_analysis_response_wrong_type():
         "suggestions": []
     }
     assert validate_analysis_response(invalid_data) is False
-

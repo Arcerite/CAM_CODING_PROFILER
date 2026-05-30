@@ -30,7 +30,7 @@ def test_validate_analysis_response_wrong_type():
     """Test that it fails if 'flaws' is a string instead of a list."""
     invalid_data = {
         "big_o": {"time": "O(n)", "space": "O(1)", "explanation": "..."},
-        "flaws": "No flaws here!", # Should be a list
+        "flaws": "No flaws here!",  # Should be a list
         "suggestions": []
     }
     assert validate_analysis_response(invalid_data) is False

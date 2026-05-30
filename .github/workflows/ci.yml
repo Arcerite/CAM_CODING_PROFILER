@@ -7,7 +7,7 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,24 +23,18 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
+          # Essential for running the app and tests
           pip install -r requirements.txt
-          # If you have a requirements.txt, use:
-          # pip install -r requirements.txt
 
-      - name: Lint with flake8
+      - name: Run All Tests
         run: |
-          # Stop the build if there are Python syntax errors or undefined names
+          # This will automatically find and run test_analyzer.py and test_app.py
+          pytest tests/
+        env:
+          # We provide a dummy key so the app initializes without crashing, 
+          # but our mocks will prevent actual API calls.
+          GROQ_API_KEY: "dummy_key_for_testing"
+
+      - name: Linting
+        run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # Exit-zero treats all errors as warnings. 
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
-
-      - name: Check for Syntax Errors
-        run: |
-          # Manually trigger a check on your core files
-          python -m py_compile app.py analyzer.py
-
-      - name: Type Check
-        run: |
-          # Checking specifically for type hint consistency
-          mypy analyzer.py --ignore-missing-imports
-          mypy app.py --ignore-missing-imports

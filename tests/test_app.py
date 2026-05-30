@@ -6,7 +6,7 @@ def test_app_renders_properly():
     at = AppTest.from_file("app.py").run()
     assert at.title[0].value == "🚀 AI-Powered Code Profiler"
     assert any("Results will appear here after analysis."
-            in m.value for m in at.markdown)
+               in m.value for m in at.markdown)
 
 
 # Patching the source module directly to catch the 'from analyzer import...'

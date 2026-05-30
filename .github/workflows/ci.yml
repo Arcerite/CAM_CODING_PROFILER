@@ -41,5 +41,6 @@ jobs:
 
       - name: Type Check
         run: |
-          # Checking analyzer.py specifically for type hint consistency
+          # Checking specifically for type hint consistency
           mypy analyzer.py --ignore-missing-imports
+          mypy app.py --ignore-missing-imports

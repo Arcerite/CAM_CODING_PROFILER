@@ -2,7 +2,7 @@ from analyzer import validate_analysis_response
 
 
 def test_validate_analysis_response_success():
-    """Test with a perfectly formatted dictionary. 
+    """Test with a perfectly formatted dictionary.
     This should return true when validated"""
 
     valid_data = {

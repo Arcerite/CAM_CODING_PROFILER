@@ -1,4 +1,4 @@
-# 🚀 AI-Powered Code Profiler
+# 🚀 Code Buddy - AI-Powered Code Profiler
 
 An intelligent Python source code analysis tool built with Streamlit and powered by Groq (Llama 3.3). This application provides automated Big-O complexity analysis, security flaw detection, code refactoring, and documentation generation.
 

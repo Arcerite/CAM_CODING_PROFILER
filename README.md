@@ -1,6 +1,28 @@
 # 🚀 Code Buddy - AI-Powered Code Profiler
 
+### Authors: Caleb Peters, Matt Simone, Alex Mulder
+### Institution: Grand Valley State University
+### Course: CIS 350
+
+## 1. Abstract
 An intelligent Python source code analysis tool built with Streamlit and powered by Groq (Llama 3.3). This application provides automated Big-O complexity analysis, security flaw detection, code refactoring, and documentation generation.
+
+## 2. Introduction
+
+## 3. Architectural Design
+### 3.1 Class Diagram
+### 3.2 Use Case Diagram
+### 3.3 Sequence Diagram
+
+## 4. User Guide/Implementation
+
+## 5. Risk Analysis and Retrospective
+
+## 6. Future Scope
+
+## 7. Conclusion
+
+## 8. Walkthrough
 
 ## ✨ Features
 

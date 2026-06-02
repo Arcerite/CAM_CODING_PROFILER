@@ -26,10 +26,10 @@ Large Language Models have changed the way that software is developed, but tryin
 To be added...
 
 ### 3.2 Use Case Diagram
-To be added... 
+![Use Case Diagram](UML/usecase_diagram.png)
 
 ### 3.3 Sequence Diagram
-To be added...
+![Use Case Diagram](UML/sequence_diagram.png)
 
 ## 4. User Guide/Implementation
 ### Prerequisites

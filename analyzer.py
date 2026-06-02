@@ -1,12 +1,18 @@
-
 import json
 import os
-
 from dotenv import load_dotenv
 from groq import Groq
 
 MODEL_NAME = "llama-3.3-70b-versatile"
 MAX_RETRIES = 3
+
+try:
+    load_dotenv()
+    API_KEY = os.getenv("GROQ_API_KEY")
+except Exception as e:
+    print(f"Error trying to load API key, Make sure to include your API key from groq as GROQ_API_KEY in your .env file {e}")
+
+client = Groq(api_key=API_KEY)
 
 
 def validate_analysis_response(data):
@@ -51,18 +57,6 @@ def validate_analysis_response(data):
         return False
 
     return True
-
-
-load_dotenv()
-
-api_key = os.getenv("GROQ_API_KEY")
-
-if not api_key:
-    raise ValueError(
-        "Missing GROQ_API_KEY in environment variables."
-    )
-
-client = Groq(api_key=api_key)
 
 
 def analyze_code(user_code):

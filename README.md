@@ -8,13 +8,9 @@
 Software development takes time and effort to do well, but **Code Buddy** aims to ease the task for developers of all skill-levels. **Code Buddy** is a website designed to help programmers create better code. Users simply upload their code and the code will be analyzed by AI to offer suggestions including Big O analysis, identified flaws, docstrings, comments, and coding conventions. Then, the user will be able to download the refactored code and the provided README. **Code Buddy** will not only save time, but it will also save developers from headaches by identifying flaws and possible bottlenecks before they arise.
 
 ## 2. Introduction
-**Code Buddy** is an intelligent Python source code analysis tool built with Streamlit and powered by Groq (Llama 3.3).
-* **Big-O Analysis**: Determines Time and Space complexity with detailed explanations.
-* **Static Analysis**: Identifies performance bottlenecks, security concerns, and PEP 8 violations.
-* **Automated Refactoring**: Generates a clean version of your code with type hints, docstrings, and improved readability.
-* **README Generation**: Automatically creates a technical README.md for the analyzed code.
-* **Downloadable Reports**: Export your refactored code and documentation instantly as .py and .md files.
-* **Security-First**: Uses strict system prompts to treat input code as data only and validates syntax via ast.
+Large Language Models have changed the way that software is developed, but trying to "vibe code" can easily turn into fighting with the model rather than creating quality software. Even if you code something functional with an LLM, it may be riddled with bugs and security risks. **Code Buddy** aims to use AI to build code faster and better without the headaches.
+
+**Code Buddy** is an intelligent Python source code analysis website built with Streamlit and powered by Groq (Llama 3.3). Once the user uploads their code, Groq will analyze it for time and space complexity, performance bottlenecks, security concerns, and PEP 8 violations. Our website will return the report with detailed explanations, a README file, and a new version of the code with type hints, docstrings, and improved readability. The user will be able to export the refactored code and documentation instantly as .py and .md files.
 
 ## 3. Architectural Design
 ### 🛠️ Tech Stack

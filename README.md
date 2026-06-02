@@ -27,8 +27,13 @@ Software development takes time and effort to do well, but **Code Buddy** aims t
 * **analyzer.py**: The backend engine containing LLM prompts, Groq client integration, and JSON response validation.
 * **.env**: Environment configuration for API keys.
 ### 3.1 Class Diagram
+To be added...
+
 ### 3.2 Use Case Diagram
+To be added... 
+
 ### 3.3 Sequence Diagram
+To be added...
 
 ## 4. User Guide/Implementation
 ### Prerequisites
@@ -57,7 +62,10 @@ Software development takes time and effort to do well, but **Code Buddy** aims t
 * **Input Sanitization**: Limits on input size (15,000 characters) to prevent excessive API usage or overhead.
 
 ## 6. Future Scope
+To be added...
 
 ## 7. Conclusion
+To be added...
 
 ## 8. Walkthrough
+To be added...

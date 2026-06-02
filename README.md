@@ -1,13 +1,14 @@
-# 🚀 Code Buddy - AI-Powered Code Profiler
+# Code Buddy :) - AI-Powered Code Profiler
 
 ### Authors: Caleb Peters, Matt Simone, Alex Mulder
 ### Institution: Grand Valley State University
 ### Course: CIS 350
 
 ## 1. Abstract
-An intelligent Python source code analysis tool built with Streamlit and powered by Groq (Llama 3.3). This application provides automated Big-O complexity analysis, security flaw detection, code refactoring, and documentation generation.
+Software development takes time and effort to do well, but **Code Buddy** aims to ease the task for developers of all skill-levels. **Code Buddy** is a website designed to help programmers create better code. Users simply upload their code and the code will be analyzed by AI to offer suggestions including Big O analysis, identified flaws, docstrings, comments, and coding conventions. Then, the user will be able to download the refactored code and the provided README. **Code Buddy** will not only save time, but it will also save developers from headaches by identifying flaws and possible bottlenecks before they arise.
 
 ## 2. Introduction
+**Code Buddy** is an intelligent Python source code analysis tool built with Streamlit and powered by Groq (Llama 3.3).
 * **Big-O Analysis**: Determines Time and Space complexity with detailed explanations.
 * **Static Analysis**: Identifies performance bottlenecks, security concerns, and PEP 8 violations.
 * **Automated Refactoring**: Generates a clean version of your code with type hints, docstrings, and improved readability.

@@ -36,17 +36,17 @@ An intelligent Python source code analysis tool built with Streamlit and powered
 
 ### Installation & Usage
 1. Clone the repository: 
-    ```git clone https://github.com/your-username/ai-code-profiler.git```
+    ```git clone https://github.com/Arcerite/CAM_CODING_PROFILER```
 2. Install dependencies: 
     ```bash
-    pip install streamlit groq python-dotenv
+    pip install -r requirements.txt
     ```
 
 3. Configure Environment: Create a .env file and add
     ``` GROQ_API_KEY=your_key_here```
 4. Run the App: 
     ```python 
-    streamlit run app.py
+    python -m streamlit run app.py
     ```
 
 ## 5. Risk Analysis and Retrospective

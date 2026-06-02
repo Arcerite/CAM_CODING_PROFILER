@@ -61,6 +61,3 @@ Software development takes time and effort to do well, but **Code Buddy** aims t
 ## 7. Conclusion
 
 ## 8. Walkthrough
-
-## 📝 License
-Distributed under the MIT License.

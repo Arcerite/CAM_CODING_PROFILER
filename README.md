@@ -26,10 +26,16 @@ Large Language Models have changed the way that software is developed, but tryin
 To be added...
 
 ### 3.2 Use Case Diagram
-![Use Case Diagram](UML/usecase_diagram.png)
+<figure align="center">
+    <img src="UML/usecase_diagram.png" alt="Use Case Diagram" />
+    <figcaption>Figure 2: Use Case Diagram</figcaption>
+</figure>
 
 ### 3.3 Sequence Diagram
-![Use Case Diagram](UML/sequence_diagram.png)
+<figure align="center">
+    <img src="UML/sequence_diagram.png" alt="Sequence Diagram" />
+    <figcaption>Figure 3: Sequence Diagram</figcaption>
+</figure>
 
 ## 4. User Guide/Implementation
 ### Prerequisites

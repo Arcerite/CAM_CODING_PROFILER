@@ -13,15 +13,8 @@ Large Language Models have changed the way that software is developed, but tryin
 **Code Buddy** is an intelligent Python source code analysis website built with Streamlit and powered by Groq (Llama 3.3). Once the user uploads their code, Groq will analyze it for time and space complexity, performance bottlenecks, security concerns, and PEP 8 violations. Our website will return the report with detailed explanations, a README file, and a new version of the code with type hints, docstrings, and improved readability. The user will be able to export the refactored code and documentation instantly as .py and .md files.
 
 ## 3. Architectural Design
-### 🛠️ Tech Stack
-* **Frontend**: Streamlit
-* **LLM**: Groq Cloud (Model: llama-3.3-70b-versatile)
-* **Language**: Python 3.x
-* **Environment Management**: python-dotenv
-### 📁 Project Structure
-* **app.py**: The Streamlit frontend, UI components, and input validation logic.
-* **analyzer.py**: The backend engine containing LLM prompts, Groq client integration, and JSON response validation.
-* **.env**: Environment configuration for API keys.
+The **Code Buddy** website is built entirely with Python. The frontend uses the Streamlit library. The backend implements the LLM prompts, API integration with Groq Cloud, and JSON response validation. The website takes in the user's pasted code or uploaded .py file to give to the Groq model to analyze. The Groq model returns a detailed report with explanations, a README file, and a new version of the code with type hints, docstrings, and improved readability. The user will be able to export the refactored code and documentation instantly as .py and .md files.
+
 ### 3.1 Class Diagram
 To be added...
 
@@ -58,10 +51,7 @@ To be added...
     ```
 
 ## 5. Risk Analysis and Retrospective
-### 🔒 Security & Validation
-* **AST Parsing**: Before processing, input code is parsed via Python's ast module to ensure it is syntactically valid.
-* **JSON Schema Validation**: Includes a robust validation function to ensure the AI's response adheres to the required big_o, flaws, and suggestions keys.
-* **Input Sanitization**: Limits on input size (15,000 characters) to prevent excessive API usage or overhead.
+To be added...
 
 ## 6. Future Scope
 To be added...

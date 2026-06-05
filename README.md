@@ -16,7 +16,10 @@ Large Language Models have changed the way that software is developed, but tryin
 The **Code Buddy** website is built entirely with Python. The frontend uses the Streamlit library. The backend implements the LLM prompts, API integration with GroqCloud, and JSON response validation. The website takes in the user's pasted code or uploaded .py file to give to the Groq Qwen3 model to analyze. The Groq Qwen3 model returns a detailed report with explanations, a README file, and a new version of the code with type hints, docstrings, and improved readability. The user will be able to export the refactored code and documentation instantly as .py and .md files.
 
 ### 3.1 Class Diagram
-To be added...
+<figure align="center">
+    <img src="UML/class_diagram.png" alt="Use Case Diagram" />
+    <figcaption>Figure 1: Class Diagram</figcaption>
+</figure>
 
 ### 3.2 Use Case Diagram
 <figure align="center">

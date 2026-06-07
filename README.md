@@ -53,8 +53,10 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
     ```
 
 4. Configure Environment: Create a .env file and add
-    ``` GROQ_API_KEY=your_key_here```
-5. Run the App: 
+    ```bash
+    GROQ_API_KEY=your_key_here
+    ```
+6. Run the App: 
     ```python 
     python -m streamlit run app.py
     ```

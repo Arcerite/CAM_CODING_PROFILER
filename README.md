@@ -43,6 +43,10 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
     ```bash
    git clone https://github.com/Arcerite/CAM_CODING_PROFILER
     ```
+2. Navigate to the repository's directory:
+   ```bash
+   cd ./CAM_CODING_PROFILER
+   ```
 3. Install dependencies: 
     ```bash
     pip install -r requirements.txt

@@ -11,8 +11,8 @@ try:
     API_KEY = os.getenv("GROQ_API_KEY")
 except Exception as e:
     print(
-        "Error trying to load API key, Make sure to include " +
-        f"your API key from groq as GROQ_API_KEY in your .env file {e}"
+        "Error trying to load API key, Make sure to include "
+        + f"your API key from groq as GROQ_API_KEY in your .env file {e}"
     )
 
 client = Groq(api_key=API_KEY)
@@ -98,7 +98,7 @@ Return EXACTLY this schema:
   "flaws": ["string"],
   "suggestions": ["string"]
 }
-"""
+""",
     }
 
     user_message = {
@@ -109,7 +109,7 @@ Analyze the following Python source code.
 <SOURCE_CODE>
 {user_code}
 </SOURCE_CODE>
-"""
+""",
     }
 
     for attempt in range(MAX_RETRIES):
@@ -174,7 +174,7 @@ Requirements:
 - Add docstrings
 - Improve readability
 - Improve security where possible
-"""
+""",
     }
 
     user_message = {
@@ -185,7 +185,7 @@ Refactor the following code.
 <SOURCE_CODE>
 {user_code}
 </SOURCE_CODE>
-"""
+""",
     }
 
     response = client.chat.completions.create(
@@ -214,7 +214,7 @@ Return ONLY markdown.
 DO NOT:
 - use code fences around the entire README
 - add explanations outside markdown
-"""
+""",
     }
 
     user_message = {
@@ -225,7 +225,7 @@ Generate a README for this code.
 <SOURCE_CODE>
 {user_code}
 </SOURCE_CODE>
-"""
+""",
     }
 
     response = client.chat.completions.create(

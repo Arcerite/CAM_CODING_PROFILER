@@ -18,16 +18,14 @@ st.set_page_config(
 
 st.title("🚀 AI-Powered Code Profiler")
 
-st.markdown(
-    """
+st.markdown("""
 Analyze Python code for:
 - Big-O complexity
 - Performance issues
 - Security concerns
 - Refactoring opportunities
 - PEP 8 compliance
-"""
-)
+""")
 
 col1, col2 = st.columns(2)
 
@@ -37,9 +35,7 @@ with col1:
         "Paste Python code here:",
         height=500,
         placeholder=(
-            "def my_function(items):\n"
-            "    for item in items:\n"
-            "        print(item)"
+            "def my_function(items):\n" "    for item in items:\n" "        print(item)"
         ),
     )
 
@@ -52,8 +48,8 @@ with col1:
 
 def validate_user_input(user_input: str) -> bool:
     if not user_input.strip():
-            st.warning("Please enter Python code.")
-            st.stop()
+        st.warning("Please enter Python code.")
+        st.stop()
     if len(user_input) > 15000:
         st.error("Code is too large.")
         return False
@@ -72,7 +68,7 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
     big_o = analysis.get("big_o", {})
     st.info(f"""Time Complexity: {big_o.get("time", "Unknown")}
             Space Complexity: {big_o.get("space", "Unknown")}""")
-    
+
     with st.expander(
         "Complexity Explanation",
         expanded=True,
@@ -119,9 +115,7 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
             for suggestion in suggestions:
                 st.write(f"- {suggestion}")
         else:
-            st.success(
-                "No suggestions generated."
-            )
+            st.success("No suggestions generated.")
 
     # =========================
     # Refactored Code
@@ -181,7 +175,7 @@ def analyze(user_input: str):
             refactored_code = refactor_code(user_input)
             readme_content = generate_readme(user_input)
         render_analysis_ui(analysis, refactored_code, readme_content)
-        
+
     except Exception as error:
         st.error(f"Analysis failed:\n{error}")
 
@@ -191,6 +185,4 @@ with col2:
     if analyze_button:
         analyze(user_input)
     else:
-        st.write(
-            "Results will appear here after analysis."
-        )
+        st.write("Results will appear here after analysis.")

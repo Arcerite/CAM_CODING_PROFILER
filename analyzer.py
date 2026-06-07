@@ -10,7 +10,8 @@ try:
     load_dotenv()
     API_KEY = os.getenv("GROQ_API_KEY")
 except Exception as e:
-    print(f"Error trying to load API key, Make sure to include your API key from groq as GROQ_API_KEY in your .env file {e}")
+    print(f"Error trying to load API key, Make sure to include" +  
+        f"your API key from groq as GROQ_API_KEY in your .env file {e}")
 
 client = Groq(api_key=API_KEY)
 

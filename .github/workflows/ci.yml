@@ -39,9 +39,7 @@ jobs:
           # Stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # Complexity check: ensure functions aren't getting too messy
-          flake8 . --count --max-complexity=10 --max-line-length=88 --statistics
-          # Ensure compatibility with Black
-          flake8 . --extend-ignore=E203,W503 --statistics
+          flake8 . --count --max-complexity=10 --max-line-length=88 --extend-ignore=E203,W503 --statistics
 
       - name: Static type check with mypy
         run: mypy . --ignore-missing-imports

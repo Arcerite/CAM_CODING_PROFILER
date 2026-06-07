@@ -1,12 +1,9 @@
 import ast
+
 import streamlit as st
 from dotenv import load_dotenv
 
-from analyzer import (
-    analyze_code,
-    generate_readme,
-    refactor_code,
-)
+from analyzer import analyze_code, generate_readme, refactor_code
 
 load_dotenv()
 

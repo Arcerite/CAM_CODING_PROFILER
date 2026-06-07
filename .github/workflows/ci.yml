@@ -28,6 +28,12 @@ jobs:
           pip install pytest flake8 black isort mypy
           pip install -r requirements.txt
 
+      - name: Check formatting with Black
+        run: black . --check
+
+      - name: Sort imports with isort
+        run: isort . --check-only --profile black
+
       - name: Lint with flake8
         run: |
           # Stop the build if there are Python syntax errors or undefined names
@@ -36,12 +42,6 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
           # Ensure compatibility with Black
           flake8 . --extend-ignore=E203
-
-      - name: Check formatting with Black
-        run: black . --check
-
-      - name: Sort imports with isort
-        run: isort . --check-only --profile black
 
       - name: Static type check with mypy
         run: mypy . --ignore-missing-imports

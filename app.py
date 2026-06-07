@@ -49,6 +49,7 @@ with col1:
         use_container_width=True,
     )
 
+
 def validate_user_input(user_input: str) -> bool:
     if not user_input.strip():
             st.warning("Please enter Python code.")
@@ -62,6 +63,7 @@ def validate_user_input(user_input: str) -> bool:
         st.error(f"Invalid Python syntax:\n{error}")
         return False
     return True
+
 
 def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):
     # =========================
@@ -168,6 +170,7 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
             use_container_width=True,
         )
 
+
 def analyze(user_input: str):
     if not validate_user_input(user_input):
         return
@@ -181,6 +184,7 @@ def analyze(user_input: str):
         
     except Exception as error:
         st.error(f"Analysis failed:\n{error}")
+
 
 with col2:
     st.subheader("Results")

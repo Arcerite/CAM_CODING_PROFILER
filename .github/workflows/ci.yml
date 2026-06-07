@@ -25,13 +25,8 @@ jobs:
           python -m pip install --upgrade pip
           # Explicitly installing pytest here ensures it's available 
           # even if the cache is out of sync with requirements.txt
-          pip install pytest flake8
+          pip install pytest flake8 black isort mypy
           pip install -r requirements.txt
-
-      - name: Check for Syntax Errors
-        run: |
-          # Fast check to ensure the files are even valid Python
-          python -m py_compile app.py analyzer.py
 
       - name: Lint with flake8
         run: |
@@ -39,6 +34,17 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # Complexity check: ensure functions aren't getting too messy
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+          # Ensure compatibility with Black
+          flake8 . --extend-ignore=E203
+
+      - name: Check formatting with Black
+        run: black . --check
+
+      - name: Sort imports with isort
+        run: isort . --check-only --profile black
+
+      - name: Static type check with mypy
+        run: mypy . --ignore-missing-imports
 
       - name: Run All Tests
         run: |

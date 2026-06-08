@@ -27,6 +27,9 @@ jobs:
           # even if the cache is out of sync with requirements.txt
           pip install pytest flake8 black isort mypy
           pip install -r requirements.txt
+      
+      - name: markdownlint-cli2-action
+        uses: DavidAnson/markdownlint-cli2-action@main
 
       - name: Check formatting with Black
         run: black . --check

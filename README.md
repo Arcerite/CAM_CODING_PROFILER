@@ -73,6 +73,7 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
     ```
 
 5. Run the App:
+
     ```python
     python -m streamlit run app.py
     ```

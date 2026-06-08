@@ -8,12 +8,12 @@ from analyzer import analyze_code, generate_readme, refactor_code
 load_dotenv()
 
 st.set_page_config(
-    page_title="AI Code Profiler",
-    page_icon="🚀",
+    page_title="Code Buddy",
+    page_icon="Images/smile_icon.png",
     layout="wide",
 )
 
-st.title("🚀 AI-Powered Code Profiler")
+st.title("Code Buddy")
 
 st.markdown("""
 Analyze Python code for:

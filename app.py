@@ -1,19 +1,54 @@
-import ast
-
 import streamlit as st
+from streamlit_navigation_bar import st_navbar
+import ast
 from dotenv import load_dotenv
-
 from analyzer import analyze_code, generate_readme, refactor_code
-
-load_dotenv()
 
 st.set_page_config(
     page_title="Code Buddy",
     page_icon="Images/smile_icon.png",
     layout="wide",
-)
+    initial_sidebar_state="collapsed"
+    )
 
-st.title("Code Buddy")
+styles = {
+    "nav": {
+        "background-color": "#60A54D",
+        "justify-content": "right",
+        "font-family": "sans-serif",
+    },
+    "div": {
+        "max-width": "8rem",
+    },
+    "span": {
+        "border-radius": "0.5rem",
+        "color": "#FFFFFF",
+        "font-weight": "bold",
+        "font-size": "16px"
+    },
+    "active": {
+        "color": "#FFFFFF"
+    },
+    "hover": {
+        "color": "#FFFFFF"
+    }
+}
+
+options= {
+    "show_menu": True,
+    "show_sidebar": False
+}
+
+page = st_navbar(["Home", "About"], styles=styles, options=options, adjust=False)
+
+if page == "About":
+    st.switch_page("pages/about.py")
+elif page == "Home":
+    pass
+
+st.write()
+
+load_dotenv()
 
 col1, col2 = st.columns(2)
 
@@ -31,6 +66,12 @@ with col1:
         use_container_width=True,
     )
 
+with col2:
+    st.subheader("Results")
+    if analyze_button:
+        analyze(user_input)
+    else:
+        st.write("Results will appear here after analysis.")
 
 def validate_user_input(user_input: str) -> bool:
     if not user_input.strip():
@@ -164,11 +205,3 @@ def analyze(user_input: str):
 
     except Exception as error:
         st.error(f"Analysis failed:\n{error}")
-
-
-with col2:
-    st.subheader("Results")
-    if analyze_button:
-        analyze(user_input)
-    else:
-        st.write("Results will appear here after analysis.")

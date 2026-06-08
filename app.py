@@ -15,25 +15,14 @@ st.set_page_config(
 
 st.title("Code Buddy")
 
-st.markdown("""
-Analyze Python code for:
-- Big-O complexity
-- Performance issues
-- Security concerns
-- Refactoring opportunities
-- PEP 8 compliance
-""")
-
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Source Code")
+    
     user_input = st.text_area(
-        "Paste Python code here:",
-        height=500,
-        placeholder=(
-            "def my_function(items):\n" "    for item in items:\n" "        print(item)"
-        ),
+        "Source Code",
+        height=600,
+        placeholder=("Paste code here..."),
     )
 
     analyze_button = st.button(

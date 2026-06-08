@@ -48,25 +48,32 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
 
 ### Installation & Usage
 
-1. Clone the repository: 
+1. Clone the repository:
+
     ```bash
    git clone https://github.com/Arcerite/CAM_CODING_PROFILER
     ```
+
 2. Navigate to the repository's directory:
+
    ```bash
    cd ./CAM_CODING_PROFILER
    ```
-3. Install dependencies: 
+
+3. Install dependencies:
+
     ```bash
     pip install -r requirements.txt
     ```
 
 4. Configure Environment: Create a .env file and add
+
     ```bash
     GROQ_API_KEY=your_key_here
     ```
-6. Run the App: 
-    ```python 
+
+5. Run the App:
+    ```python
     python -m streamlit run app.py
     ```
 

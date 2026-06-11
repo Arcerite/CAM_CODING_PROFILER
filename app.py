@@ -36,7 +36,7 @@ with col1:
     user_input = st.text_area(
         "Paste Python code here:",
         height=500,
-        placeholder="def my_function(items):\n    for item in items:\n        print(item)",
+        placeholder="def my_function(items):\n    for item in items:\n        print(item)", # noqa: E501
     )
 
     analyze_button = st.button(
@@ -103,7 +103,7 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
     with st.expander(
         "Suggestions",
         expanded=True,
-    ):
+    ): # noqa: E501
         suggestions = analysis.get(
             "suggestions",
             [],
@@ -191,7 +191,7 @@ with col2:
     if analyze_button:
         analyze(user_input)
 
-    # 2. Check if we have saved results in session state to render (regardless of reruns)
+    # 2. Check if we have saved results in session state to render (regardless of reruns) # noqa: E501
     if st.session_state.analysis_results is not None:
         results = st.session_state.analysis_results
         render_analysis_ui(

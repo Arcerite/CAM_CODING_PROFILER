@@ -15,14 +15,16 @@ st.set_page_config(
 
 st.title("🚀 AI-Powered Code Profiler")
 
-st.markdown("""
+st.markdown(
+    """
 Analyze Python code for:
 - Big-O complexity
 - Performance issues
 - Security concerns
 - Refactoring opportunities
 - PEP 8 compliance
-""")
+"""
+)
 
 # --- Initialize Session State ---
 # This ensures our results survive a rerun triggered by download buttons
@@ -37,9 +39,7 @@ with col1:
         "Paste Python code here:",
         height=500,
         placeholder=(
-            "def my_function(items):\n"
-            "    for item in items:\n"
-            "        print(item)"
+            "def my_function(items):\n" "    for item in items:\n" "        print(item)"
         ),
     )
 
@@ -70,8 +70,10 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
     # Complexity
     # =========================
     big_o = analysis.get("big_o", {})
-    st.info(f"""Time Complexity: {big_o.get("time", "Unknown")}
-            Space Complexity: {big_o.get("space", "Unknown")}""")
+    st.info(
+        f"""Time Complexity: {big_o.get("time", "Unknown")}
+            Space Complexity: {big_o.get("space", "Unknown")}"""
+    )
 
     with st.expander(
         "Complexity Explanation",

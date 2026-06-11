@@ -101,7 +101,7 @@ Return EXACTLY this schema:
   "suggestions": ["string"]
 }
 """
-    user_prompt = f"Analyze the following Python source code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"
+    user_prompt = f"Analyze the following Python source code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
 
     for attempt in range(MAX_RETRIES):
         try:
@@ -163,5 +163,5 @@ Generate a concise README.md for the provided Python code.
 Return ONLY markdown.
 DO NOT use code fences around the entire README or add explanations outside markdown.
 """
-    user_prompt = f"Generate a README for this code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"
+    user_prompt = f"Generate a README for this code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
     return _query_llm(system_prompt, user_prompt)

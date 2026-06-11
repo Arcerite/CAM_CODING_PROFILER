@@ -1,9 +1,12 @@
 from __future__ import annotations
-from typing import Optional
-import streamlit as st
-from streamlit_navigation_bar import st_navbar
+
 import ast
+from typing import Optional
+
+import streamlit as st
 from dotenv import load_dotenv
+from streamlit_navigation_bar import st_navbar
+
 from analyzer import analyze_code, generate_readme, refactor_code
 
 st.set_page_config(

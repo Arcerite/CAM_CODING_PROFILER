@@ -77,13 +77,25 @@ page = st_navbar(
     options=options,
     adjust=False,
 )
+# --- Initialize Session State ---
+# This ensures our results survive a rerun triggered by download buttons
+if "analysis_results" not in st.session_state:
+    st.session_state.analysis_results = None
 
 if page == "About":
     st.switch_page("pages/about.py")
 elif page == "Home":
     pass
 
-st.write()
+with col1:
+    st.subheader("Source Code")
+    user_input = st.text_area(
+        "Paste Python code here:",
+        height=500,
+        placeholder=(
+            "def my_function(items):\n" "    for item in items:\n" "        print(item)"  # noqa: E501
+        ),
+    )
 
 load_dotenv()
 
@@ -103,11 +115,8 @@ def validate_user_input(user_input: str) -> bool:
     return True
 
 
-def render_analysis_ui(
-    analysis: Optional[dict] = None,
-    refactored_code: Optional[str] = None,
-    readme_content: Optional[str] = None,
-):
+def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):  # noqa: E501
+    # =========================
     # Complexity
     with st.expander(
         "**Complexity**",
@@ -218,7 +227,13 @@ def analyze(user_input: str):
             analysis = analyze_code(user_input)
             refactored_code = refactor_code(user_input)
             readme_content = generate_readme(user_input)
-        render_analysis_ui(analysis, refactored_code, readme_content)
+
+            # Save the raw outputs into session state
+            st.session_state.analysis_results = {
+                "analysis": analysis,
+                "refactored_code": refactored_code,
+                "readme_content": readme_content,
+            }
 
     except Exception as error:
         st.error(f"Analysis failed:\n{error}")
@@ -245,5 +260,14 @@ with col2:
     st.markdown("<h3 style='text-align: center;'> Results</h3>", unsafe_allow_html=True)
     if analyze_button:
         analyze(user_input)
+
+    # 2. Check if we have saved results in session state to render
+    if st.session_state.analysis_results is not None:
+        results = st.session_state.analysis_results
+        render_analysis_ui(
+            analysis=results["analysis"],
+            refactored_code=results["refactored_code"],
+            readme_content=results["readme_content"],
+        )
     else:
         render_analysis_ui(None, None, None)

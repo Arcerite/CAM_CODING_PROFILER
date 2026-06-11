@@ -8,18 +8,20 @@ from groq import Groq
 MODEL_NAME = "llama-3.3-70b-versatile"
 MAX_RETRIES = 3
 
-try:
-    # First, try to read from Streamlit's secrets (Production)
-    if "GROQ_API_KEY" in st.secrets:
-        API_KEY = st.secrets["GROQ_API_KEY"]
-    else:
-        # Fallback to local .env for local development
-        load_dotenv()
-        API_KEY = os.getenv("GROQ_API_KEY")
-except Exception as e:
-    print(f"Error trying to load API key: {e}")
 
-client = Groq(api_key=API_KEY)
+def create_client() -> Groq:
+    try:
+        # First, try to read from Streamlit's secrets (Production)
+        if "GROQ_API_KEY" in st.secrets:
+            API_KEY = st.secrets["GROQ_API_KEY"]
+        else:
+            # Fallback to local .env for local development
+            load_dotenv()
+            API_KEY = os.getenv("GROQ_API_KEY")
+    except Exception as e:
+        print(f"Error trying to load API key: {e}")
+
+    return Groq(api_key=API_KEY)
 
 
 def validate_analysis_response(data):
@@ -115,7 +117,7 @@ Analyze the following Python source code.
 </SOURCE_CODE>
 """,
     }
-
+    client = create_client()
     for attempt in range(MAX_RETRIES):
 
         try:
@@ -191,7 +193,7 @@ Refactor the following code.
 </SOURCE_CODE>
 """,
     }
-
+    client = create_client()
     response = client.chat.completions.create(
         model=MODEL_NAME,
         temperature=0,
@@ -231,7 +233,7 @@ Generate a README for this code.
 </SOURCE_CODE>
 """,
     }
-
+    client = create_client()
     response = client.chat.completions.create(
         model=MODEL_NAME,
         temperature=0,

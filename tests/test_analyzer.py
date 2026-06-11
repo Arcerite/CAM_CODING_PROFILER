@@ -6,7 +6,7 @@ def test_validate_analysis_response_success():
     This should return true when validated"""
 
     valid_data = {
-        "big_o": {"time": "O(n)", "space": "O(1)", "explanation": "Simple loop."},
+        "big_o": {"time": "O(n)", "space": "O(1)", "explanation": "Simple loop."},  # noqa: E501
         "flaws": ["None"],
         "suggestions": ["Add type hints"],
     }

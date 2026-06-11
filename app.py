@@ -87,7 +87,19 @@ if page == "About":
 elif page == "Home":
     pass
 
+<<<<<<< HEAD
 st.write()
+=======
+with col1:
+    st.subheader("Source Code")
+    user_input = st.text_area(
+        "Paste Python code here:",
+        height=500,
+        placeholder=(
+            "def my_function(items):\n" "    for item in items:\n" "        print(item)"  # noqa: E501
+        ),
+    )
+>>>>>>> main
 
 load_dotenv()
 
@@ -107,6 +119,7 @@ def validate_user_input(user_input: str) -> bool:
     return True
 
 
+<<<<<<< HEAD
 def _render_complexity_section(analysis: Optional[dict]) -> None:
     """Render the complexity analysis section."""
     with st.expander("**Complexity**", expanded=True):
@@ -118,6 +131,26 @@ def _render_complexity_section(analysis: Optional[dict]) -> None:
                 f"Time Complexity: {big_o.get('time', 'Unknown')}  \n",
                 f"Space Complexity: {big_o.get('space', 'Unknown')}  \n\n",
                 big_o.get("explanation", "No explanation provided."),
+=======
+def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):  # noqa: E501
+    # =========================
+    # Complexity
+    # =========================
+    big_o = analysis.get("big_o", {})
+    st.info(
+        f"""Time Complexity: {big_o.get("time", "Unknown")}
+            Space Complexity: {big_o.get("space", "Unknown")}"""
+    )
+
+    with st.expander(
+        "Complexity Explanation",
+        expanded=True,
+    ):
+        st.write(
+            big_o.get(
+                "explanation",
+                "No explanation provided.",
+>>>>>>> main
             )
 
 

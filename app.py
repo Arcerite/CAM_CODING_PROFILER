@@ -87,7 +87,15 @@ if page == "About":
 elif page == "Home":
     pass
 
-st.write()
+with col1:
+    st.subheader("Source Code")
+    user_input = st.text_area(
+        "Paste Python code here:",
+        height=500,
+        placeholder=(
+            "def my_function(items):\n" "    for item in items:\n" "        print(item)"  # noqa: E501
+        ),
+    )
 
 load_dotenv()
 
@@ -107,11 +115,8 @@ def validate_user_input(user_input: str) -> bool:
     return True
 
 
-def render_analysis_ui(
-    analysis: Optional[dict] = None,
-    refactored_code: Optional[str] = None,
-    readme_content: Optional[str] = None,
-):
+def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):  # noqa: E501
+    # =========================
     # Complexity
     with st.expander(
         "**Complexity**",

@@ -11,7 +11,7 @@ MAX_RETRIES = 3
 
 
 def create_client() -> Groq:
-    """Initialize Groq client using Streamlit secrets or local .env fallback."""
+    """Initialize Groq client using Streamlit secrets or local .env fallback."""  # noqa: E501
     api_key = None
 
     try:
@@ -26,7 +26,7 @@ def create_client() -> Groq:
 
     if not api_key:
         raise ValueError(
-            "GROQ_API_KEY could not be found in Streamlit secrets or local .env file."
+            "GROQ_API_KEY could not be found in Streamlit secrets or local .env file."  # noqa: E501
         )
 
     return Groq(api_key=api_key)
@@ -55,7 +55,7 @@ def _query_llm(
     if response_format:
         kwargs["response_format"] = response_format
 
-    response = client.chat.completions.create(**kwargs)
+    response = client.chat.completions.create(**kwargs)  # type: ignore
     return response.choices[0].message.content.strip()
 
 
@@ -66,7 +66,7 @@ def validate_analysis_response(data: Any) -> bool:
 
     if not isinstance(data, dict) or set(data.keys()) != required_keys:
         return False
-    if not isinstance(data["big_o"], dict) or set(data["big_o"].keys()) != big_o_keys:
+    if not isinstance(data["big_o"], dict) or set(data["big_o"].keys()) != big_o_keys:  # noqa: E501
         return False
     if not isinstance(data["flaws"], list) or not all(
         isinstance(i, str) for i in data["flaws"]
@@ -101,7 +101,7 @@ Return EXACTLY this schema:
   "suggestions": ["string"]
 }
 """
-    user_prompt = f"Analyze the following Python source code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"
+    user_prompt = f"Analyze the following Python source code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
 
     for attempt in range(MAX_RETRIES):
         try:
@@ -149,7 +149,7 @@ Requirements:
 - Improve security where possible
 """
     user_prompt = (
-        f"Refactor the following code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"
+        f"Refactor the following code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
     )
     return _query_llm(system_prompt, user_prompt)
 
@@ -161,7 +161,7 @@ You are a technical documentation generator.
 Generate a concise README.md for the provided Python code.
 
 Return ONLY markdown.
-DO NOT use code fences around the entire README or add explanations outside markdown.
+DO NOT use code fences around the entire README or add explanations outside markdown.  # noqa: E501
 """
-    user_prompt = f"Generate a README for this code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"
+    user_prompt = f"Generate a README for this code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
     return _query_llm(system_prompt, user_prompt)

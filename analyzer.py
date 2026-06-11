@@ -55,7 +55,7 @@ def _query_llm(
     if response_format:
         kwargs["response_format"] = response_format
 
-    response = client.chat.completions.create(**kwargs)
+    response = client.chat.completions.create(**kwargs)  # type: ignore
     return response.choices[0].message.content.strip()
 
 

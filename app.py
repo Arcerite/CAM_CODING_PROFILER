@@ -87,18 +87,6 @@ if page == "About":
 elif page == "Home":
     pass
 
-with col1:
-    st.subheader("Source Code")
-    user_input = st.text_area(
-        "Paste Python code here:",
-        height=500,
-        placeholder=(
-            "def my_function(items):\n"
-            "    for item in items:\n"
-            "        print(item)"  # noqa: E501
-        ),
-    )
-
 load_dotenv()
 
 
@@ -245,7 +233,7 @@ with col1:
     user_input = st.text_area(
         "Source Code",
         height=600,
-        placeholder=("Paste code here..."),
+        placeholder="Paste code here...",
         label_visibility="collapsed",
     )
 
@@ -256,7 +244,10 @@ with col1:
     )
 
 with col2:
-    st.markdown("<h3 style='text-align: center;'> Results</h3>", unsafe_allow_html=True)
+    st.markdown(
+        "<h3 style='text-align: center;'> Results</h3>",
+        unsafe_allow_html=True,
+    )
     if analyze_button:
         analyze(user_input)
 

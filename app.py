@@ -23,6 +23,17 @@ st.markdown("""
         padding-bottom: 1rem;
         padding-left: 1rem;
         padding-right: 1rem;
+    },
+    [data-testid="st-navbar"] > div {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    max-width: 100% !important;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    },
+    [data-testid="st-navbar"] > div > div {
+        flex: 0 1 auto !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -30,17 +41,24 @@ st.markdown("""
 styles = {
     "nav": {
         "background-color": "#60A54D",
-        "justify-content": "right",
+        "align-items": "center",
         "font-family": "sans-serif",
+        "padding-top": "1rem",
+        "padding-bottom": "1rem",
+        "display": "flex"
     },
     "div": {
-        "max-width": "8rem",
+        "max-width":"100%"
     },
     "span": {
-        "border-radius": "0.5rem",
+        "justify-content": "right",
         "color": "#FFFFFF",
-        "font-weight": "bold",
-        "font-size": "16px"
+        "font-weight": "normal",
+        "font-size": "14px"
+    },
+    "img": {
+        "height": "50px",
+        "width": "auto"
     },
     "active": {
         "color": "#FFFFFF"
@@ -52,10 +70,20 @@ styles = {
 
 options= {
     "show_menu": False,
-    "show_sidebar": False
+    "show_sidebar": False,
+    "hide_nav": True
 }
 
-page = st_navbar(["Home", "About"], styles=styles, options=options, adjust=False)
+page = st_navbar(
+    ["About"], 
+    "Home", 
+    logo_path="Images/logo2.svg", 
+    logo_page="Home",
+    urls={"About":"https://github.com/Arcerite/CAM_CODING_PROFILER"},
+    styles=styles, 
+    options=options, 
+    adjust=False
+    )
 
 if page == "About":
     st.switch_page("pages/about.py")

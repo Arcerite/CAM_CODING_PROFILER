@@ -10,10 +10,11 @@ st.set_page_config(
     page_title="Code Buddy",
     page_icon="Images/smile_icon.png",
     layout="wide",
-    initial_sidebar_state="collapsed"
-    )
+    initial_sidebar_state="collapsed",
+)
 
-st.markdown("""
+st.markdown(
+    """
     .stAppDeployButton {
         display: none;
     }
@@ -36,7 +37,9 @@ st.markdown("""
         flex: 0 1 auto !important;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True,
+)
 
 styles = {
     "nav": {
@@ -45,45 +48,32 @@ styles = {
         "font-family": "sans-serif",
         "padding-top": "1rem",
         "padding-bottom": "1rem",
-        "display": "flex"
+        "display": "flex",
     },
-    "div": {
-        "max-width":"100%"
-    },
+    "div": {"max-width": "100%"},
     "span": {
         "justify-content": "right",
         "color": "#FFFFFF",
         "font-weight": "normal",
-        "font-size": "14px"
+        "font-size": "14px",
     },
-    "img": {
-        "height": "50px",
-        "width": "auto"
-    },
-    "active": {
-        "color": "#FFFFFF"
-    },
-    "hover": {
-        "color": "#FFFFFF"
-    }
+    "img": {"height": "50px", "width": "auto"},
+    "active": {"color": "#FFFFFF"},
+    "hover": {"color": "#FFFFFF"},
 }
 
-options= {
-    "show_menu": False,
-    "show_sidebar": False,
-    "hide_nav": True
-}
+options = {"show_menu": False, "show_sidebar": False, "hide_nav": True}
 
 page = st_navbar(
-    ["About"], 
-    "Home", 
-    logo_path="Images/logo2.svg", 
+    ["About"],
+    "Home",
+    logo_path="Images/logo2.svg",
     logo_page="Home",
-    urls={"About":"https://github.com/Arcerite/CAM_CODING_PROFILER"},
-    styles=styles, 
-    options=options, 
-    adjust=False
-    )
+    urls={"About": "https://github.com/Arcerite/CAM_CODING_PROFILER"},
+    styles=styles,
+    options=options,
+    adjust=False,
+)
 
 if page == "About":
     st.switch_page("pages/about.py")
@@ -93,6 +83,7 @@ elif page == "Home":
 st.write()
 
 load_dotenv()
+
 
 def validate_user_input(user_input: str) -> bool:
     if not user_input.strip():
@@ -109,13 +100,17 @@ def validate_user_input(user_input: str) -> bool:
     return True
 
 
-def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[str]=None, readme_content: Optional[str]=None):
+def render_analysis_ui(
+    analysis: Optional[dict] = None,
+    refactored_code: Optional[str] = None,
+    readme_content: Optional[str] = None,
+):
     # Complexity
     with st.expander(
         "**Complexity**",
         expanded=True,
     ):
-        if (analysis is None):
+        if analysis is None:
             st.write("Please run the code analysis to find the complexity.")
         else:
             big_o = analysis.get("big_o", {})
@@ -125,7 +120,7 @@ def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[
                 big_o.get(
                     "explanation",
                     "No explanation provided.",
-                )
+                ),
             )
 
     # Flaws
@@ -133,7 +128,7 @@ def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[
         "**Identified Flaws**",
         expanded=False,
     ):
-        if (analysis is None):
+        if analysis is None:
             st.write("Please run the code analysis to find flaws.")
         else:
             flaws = analysis.get("flaws", [])
@@ -149,7 +144,7 @@ def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[
         "**Suggestions**",
         expanded=False,
     ):
-        if (analysis is None):
+        if analysis is None:
             st.write("Please run the code analysis to find suggestions.")
         else:
             suggestions = analysis.get(
@@ -168,12 +163,12 @@ def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[
         "**Refactored Code**",
         expanded=False,
     ):
-        if (refactored_code is None):
+        if refactored_code is None:
             st.write("Please run the code analysis to get refactored code.")
         else:
             st.code(
-            refactored_code,
-            language="python",
+                refactored_code,
+                language="python",
             )
 
     # README
@@ -181,7 +176,7 @@ def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[
         "**Generated README**",
         expanded=False,
     ):
-        if (readme_content is None):
+        if readme_content is None:
             st.write("Please run the code analysis to get the generated README.")
         else:
             st.markdown(readme_content)
@@ -210,6 +205,7 @@ def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[
                 use_container_width=True,
             )
 
+
 def analyze(user_input: str):
     if not validate_user_input(user_input):
         return
@@ -223,6 +219,7 @@ def analyze(user_input: str):
 
     except Exception as error:
         st.error(f"Analysis failed:\n{error}")
+
 
 col1, col2 = st.columns(2)
 
@@ -242,10 +239,7 @@ with col1:
     )
 
 with col2:
-    st.markdown(
-        "<h3 style='text-align: center;'> Results</h3>",
-        unsafe_allow_html=True
-    )
+    st.markdown("<h3 style='text-align: center;'> Results</h3>", unsafe_allow_html=True)
     if analyze_button:
         analyze(user_input)
     else:

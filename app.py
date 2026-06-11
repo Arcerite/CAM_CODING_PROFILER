@@ -38,9 +38,7 @@ with col1:
     user_input = st.text_area(
         "Paste Python code here:",
         height=500,
-        placeholder=(
-            "def my_function(items):\n" "    for item in items:\n" "        print(item)"
-        ),
+        placeholder="def my_function(items):\n    for item in items:\n        print(item)",
     )
 
     analyze_button = st.button(

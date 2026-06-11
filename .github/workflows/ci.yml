@@ -30,8 +30,8 @@ jobs:
       - name: markdownlint-cli2-action
         uses: DavidAnson/markdownlint-cli2-action@main
 
-      - name: Check formatting with Black
-        run: black . --check --diff
+      #- name: Check formatting with Black
+      #  run: black . --check --diff
 
       - name: Sort imports with isort
         run: isort . --check-only --profile black

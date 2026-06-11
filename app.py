@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 import ast
@@ -80,93 +81,106 @@ def validate_user_input(user_input: str) -> bool:
     return True
 
 
-def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):
+def render_analysis_ui(analysis: Optional[dict]=None, refactored_code: Optional[str]=None, readme_content: Optional[str]=None):
     # Complexity
-    big_o = analysis.get("big_o", {})
-
     with st.expander(
         "**Complexity**",
         expanded=True,
     ):
-        st.write(
-            f"Time Complexity: {big_o.get("time", "Unknown")}  \n",
-            f"Space Complexity: {big_o.get("space", "Unknown")}  \n\n",
-            big_o.get(
-                "explanation",
-                "No explanation provided.",
+        if (analysis is None):
+            st.write("Please run the code analysis to find the complexity.")
+        else:
+            big_o = analysis.get("big_o", {})
+            st.write(
+                f"Time Complexity: {big_o.get("time", "Unknown")}  \n",
+                f"Space Complexity: {big_o.get("space", "Unknown")}  \n\n",
+                big_o.get(
+                    "explanation",
+                    "No explanation provided.",
+                )
             )
-        )
 
     # Flaws
     with st.expander(
         "**Identified Flaws**",
-        expanded=True,
+        expanded=False,
     ):
-
-        flaws = analysis.get("flaws", [])
-
-        if flaws:
-            for flaw in flaws:
-                st.write(f"- {flaw}")
+        if (analysis is None):
+            st.write("Please run the code analysis to find flaws.")
         else:
-            st.success("No major flaws detected.")
+            flaws = analysis.get("flaws", [])
+
+            if flaws:
+                for flaw in flaws:
+                    st.write(f"- {flaw}")
+            else:
+                st.success("No major flaws detected.")
 
     # Suggestions
     with st.expander(
         "**Suggestions**",
-        expanded=True,
+        expanded=False,
     ):
-
-        suggestions = analysis.get(
-            "suggestions",
-            [],
-        )
-
-        if suggestions:
-            for suggestion in suggestions:
-                st.write(f"- {suggestion}")
+        if (analysis is None):
+            st.write("Please run the code analysis to find suggestions.")
         else:
-            st.success("No suggestions generated.")
+            suggestions = analysis.get(
+                "suggestions",
+                [],
+            )
+
+            if suggestions:
+                for suggestion in suggestions:
+                    st.write(f"- {suggestion}")
+            else:
+                st.success("No suggestions generated.")
 
     # Refactored Code
     with st.expander(
         "**Refactored Code**",
         expanded=False,
     ):
-        st.code(
-        refactored_code,
-        language="python",
-        )
+        if (refactored_code is None):
+            st.write("Please run the code analysis to get refactored code.")
+        else:
+            st.code(
+            refactored_code,
+            language="python",
+            )
 
     # README
     with st.expander(
         "**Generated README**",
         expanded=False,
     ):
-        st.markdown(readme_content)
+        if (readme_content is None):
+            st.write("Please run the code analysis to get the generated README.")
+        else:
+            st.markdown(readme_content)
 
     # Downloads
-    st.markdown("---")
+    if (readme_content is not None) and (refactored_code is not None):
+        st.markdown("---")
 
-    d_col1, d_col2 = st.columns(2)
+        d_col1, d_col2 = st.columns(2)
 
-    with d_col1:
-        st.download_button(
-            label="💾 Download Code",
-            data=refactored_code,
-            file_name="refactored_code.py",
-            mime="text/x-python",
-            use_container_width=True,
-        )
+        with d_col1:
+            st.download_button(
+                label="💾 Download Code",
+                data=refactored_code,
+                file_name="refactored_code.py",
+                mime="text/x-python",
+                use_container_width=True,
+            )
 
-    with d_col2:
-        st.download_button(
-            label="📖 Download README",
-            data=readme_content,
-            file_name="README.md",
-            mime="text/markdown",
-            use_container_width=True,
-        )
+        with d_col2:
+            st.download_button(
+                label="📖 Download README",
+                data=readme_content,
+                file_name="README.md",
+                mime="text/markdown",
+                use_container_width=True,
+            )
 
 def analyze(user_input: str):
     if not validate_user_input(user_input):
@@ -207,4 +221,4 @@ with col2:
     if analyze_button:
         analyze(user_input)
     else:
-        st.write("Results will appear here after analysis.")
+        render_analysis_ui(None, None, None)

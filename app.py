@@ -12,6 +12,20 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
     )
 
+st.markdown("""
+    .stAppDeployButton {
+        display: none;
+    }
+    <style>
+    .block-container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
 styles = {
     "nav": {
         "background-color": "#60A54D",
@@ -36,7 +50,7 @@ styles = {
 }
 
 options= {
-    "show_menu": True,
+    "show_menu": False,
     "show_sidebar": False
 }
 
@@ -67,30 +81,25 @@ def validate_user_input(user_input: str) -> bool:
 
 
 def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):
-    # =========================
     # Complexity
-    # =========================
     big_o = analysis.get("big_o", {})
-    st.info(f"""Time Complexity: {big_o.get("time", "Unknown")}
-            Space Complexity: {big_o.get("space", "Unknown")}""")
 
     with st.expander(
-        "Complexity Explanation",
+        "**Complexity**",
         expanded=True,
     ):
         st.write(
+            f"Time Complexity: {big_o.get("time", "Unknown")}  \n",
+            f"Space Complexity: {big_o.get("space", "Unknown")}  \n\n",
             big_o.get(
                 "explanation",
                 "No explanation provided.",
             )
         )
 
-    # =========================
     # Flaws
-    # =========================
-
     with st.expander(
-        "Identified Flaws",
+        "**Identified Flaws**",
         expanded=True,
     ):
 
@@ -102,12 +111,9 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
         else:
             st.success("No major flaws detected.")
 
-    # =========================
     # Suggestions
-    # =========================
-
     with st.expander(
-        "Suggestions",
+        "**Suggestions**",
         expanded=True,
     ):
 
@@ -122,31 +128,24 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
         else:
             st.success("No suggestions generated.")
 
-    # =========================
     # Refactored Code
-    # =========================
-
-    st.markdown("### Refactored Code")
-
-    st.code(
+    with st.expander(
+        "**Refactored Code**",
+        expanded=False,
+    ):
+        st.code(
         refactored_code,
         language="python",
-    )
+        )
 
-    # =========================
     # README
-    # =========================
-
     with st.expander(
-        "Generated README",
+        "**Generated README**",
         expanded=False,
     ):
         st.markdown(readme_content)
 
-    # =========================
     # Downloads
-    # =========================
-
     st.markdown("---")
 
     d_col1, d_col2 = st.columns(2)

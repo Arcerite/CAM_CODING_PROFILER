@@ -1,3 +1,4 @@
+from __future__ import annotations
 import streamlit as st
 from streamlit_navigation_bar import st_navbar
 import ast
@@ -49,29 +50,6 @@ elif page == "Home":
 st.write()
 
 load_dotenv()
-
-col1, col2 = st.columns(2)
-
-with col1:
-    
-    user_input = st.text_area(
-        "Source Code",
-        height=600,
-        placeholder=("Paste code here..."),
-    )
-
-    analyze_button = st.button(
-        "Analyze & Refactor",
-        type="primary",
-        use_container_width=True,
-    )
-
-with col2:
-    st.subheader("Results")
-    if analyze_button:
-        analyze(user_input)
-    else:
-        st.write("Results will appear here after analysis.")
 
 def validate_user_input(user_input: str) -> bool:
     if not user_input.strip():
@@ -191,7 +169,6 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
             use_container_width=True,
         )
 
-
 def analyze(user_input: str):
     if not validate_user_input(user_input):
         return
@@ -205,3 +182,27 @@ def analyze(user_input: str):
 
     except Exception as error:
         st.error(f"Analysis failed:\n{error}")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Source Code")
+    user_input = st.text_area(
+        "Source Code",
+        height=600,
+        placeholder=("Paste code here..."),
+        label_visibility="collapsed",
+    )
+
+    analyze_button = st.button(
+        "Analyze & Refactor",
+        type="primary",
+        use_container_width=True,
+    )
+
+with col2:
+    st.subheader("Results")
+    if analyze_button:
+        analyze(user_input)
+    else:
+        st.write("Results will appear here after analysis.")

@@ -15,14 +15,16 @@ st.set_page_config(
 
 st.title("🚀 AI-Powered Code Profiler")
 
-st.markdown("""
+st.markdown(
+    """
 Analyze Python code for:
 - Big-O complexity
 - Performance issues
 - Security concerns
 - Refactoring opportunities
 - PEP 8 compliance
-""")
+"""
+)
 
 # --- Initialize Session State ---
 # This ensures our results survive a rerun triggered by download buttons
@@ -68,8 +70,10 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
     # Complexity
     # =========================
     big_o = analysis.get("big_o", {})
-    st.info(f"""Time Complexity: {big_o.get("time", "Unknown")}
-            Space Complexity: {big_o.get("space", "Unknown")}""")
+    st.info(
+        f"""Time Complexity: {big_o.get("time", "Unknown")}
+            Space Complexity: {big_o.get("space", "Unknown")}"""
+    )
 
     with st.expander(
         "Complexity Explanation",
@@ -176,12 +180,12 @@ def analyze(user_input: str):
             analysis = analyze_code(user_input)
             refactored_code = refactor_code(user_input)
             readme_content = generate_readme(user_input)
-            
+
             # Save the raw outputs into session state
             st.session_state.analysis_results = {
                 "analysis": analysis,
                 "refactored_code": refactored_code,
-                "readme_content": readme_content
+                "readme_content": readme_content,
             }
 
     except Exception as error:
@@ -190,18 +194,18 @@ def analyze(user_input: str):
 
 with col2:
     st.subheader("Results")
-    
+
     # 1. If they hit the button, run the processing and save to session state
     if analyze_button:
         analyze(user_input)
-    
+
     # 2. Check if we have saved results in session state to render (regardless of reruns)
     if st.session_state.analysis_results is not None:
         results = st.session_state.analysis_results
         render_analysis_ui(
-            analysis=results["analysis"], 
-            refactored_code=results["refactored_code"], 
-            readme_content=results["readme_content"]
+            analysis=results["analysis"],
+            refactored_code=results["refactored_code"],
+            readme_content=results["readme_content"],
         )
     else:
         st.write("Results will appear here after analysis.")

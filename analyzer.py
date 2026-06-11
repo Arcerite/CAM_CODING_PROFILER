@@ -1,5 +1,6 @@
 import json
 import os
+
 import streamlit as st
 from dotenv import load_dotenv
 from groq import Groq
@@ -14,6 +15,7 @@ try:
     else:
         # Fallback to local .env for local development
         import os
+
         from dotenv import load_dotenv
 
         load_dotenv()

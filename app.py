@@ -201,7 +201,10 @@ with col1:
     )
 
 with col2:
-    st.subheader("Results")
+    st.markdown(
+        "<h3 style='text-align: center;'> Results</h3>",
+        unsafe_allow_html=True
+    )
     if analyze_button:
         analyze(user_input)
     else:

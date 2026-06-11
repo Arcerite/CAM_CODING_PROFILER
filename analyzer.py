@@ -1,6 +1,6 @@
 import json
 import os
-
+import streamlit as st
 from dotenv import load_dotenv
 from groq import Groq
 
@@ -8,13 +8,19 @@ MODEL_NAME = "llama-3.3-70b-versatile"
 MAX_RETRIES = 3
 
 try:
-    load_dotenv()
-    API_KEY = os.getenv("GROQ_API_KEY")
+    # First, try to read from Streamlit's secrets (Production)
+    if "GROQ_API_KEY" in st.secrets:
+        API_KEY = st.secrets["GROQ_API_KEY"]
+    else:
+        # Fallback to local .env for local development
+        import os
+        from dotenv import load_dotenv
+        load_dotenv()
+        API_KEY = os.getenv("GROQ_API_KEY")
 except Exception as e:
-    print(
-        "Error trying to load API key, Make sure to include "
-        + f"your API key from groq as GROQ_API_KEY in your .env file {e}"
-    )
+    print(f"Error trying to load API key: {e}")
+
+client = Groq(api_key=API_KEY)
 
 client = Groq(api_key=API_KEY)
 

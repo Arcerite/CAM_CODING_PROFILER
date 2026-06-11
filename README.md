@@ -1,4 +1,4 @@
-# Code Buddy :) - AI-Powered Code Profiler
+# Code Buddy ☺ - AI-Powered Code Profiler
 
 <p>Authors: Caleb Peters, Matt Simone, Alex Mulder<br>
 Institution: Grand Valley State University<br>

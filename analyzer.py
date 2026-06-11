@@ -23,8 +23,6 @@ except Exception as e:
 
 client = Groq(api_key=API_KEY)
 
-client = Groq(api_key=API_KEY)
-
 
 def validate_analysis_response(data):
     """

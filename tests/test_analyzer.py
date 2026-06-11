@@ -1,4 +1,7 @@
-from analyzer import validate_analysis_response
+from unittest.mock import  patch
+
+with patch("groq.Groq"):
+    from analyzer import validate_analysis_response
 
 
 def test_validate_analysis_response_success():

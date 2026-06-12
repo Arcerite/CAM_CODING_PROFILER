@@ -241,7 +241,7 @@ def render_analysis_ui(
     analysis: Optional[dict] = None,
     refactored_code: Optional[str] = None,
     readme_content: Optional[str] = None,
-):
+) -> None:
     """
     Render the analysis UI with all sections.
 
@@ -258,7 +258,7 @@ def render_analysis_ui(
     _render_download_buttons(refactored_code, readme_content)
 
 
-def analyze(user_input: str):
+def analyze(user_input: str) -> None:
     """
     Analyze the user input code.
 

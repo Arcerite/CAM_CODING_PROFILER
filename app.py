@@ -9,14 +9,22 @@ from streamlit_navigation_bar import st_navbar
 
 from analyzer import analyze_code, generate_readme, refactor_code
 
-st.set_page_config(
-    page_title="Code Buddy",
-    page_icon="Images/smile_icon.png",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
+def set_page_config() -> None:
+    '''
+    Set the page configuration for the Streamlit app.
+    '''
+    st.set_page_config(
+        page_title="Code Buddy",
+        page_icon="Images/smile_icon.png",
+        layout="wide",
+        initial_sidebar_state="collapsed",
+    )
 
-st.markdown(
+def hide_streamlit_buttons() -> None:
+    """
+    Hide the Streamlit buttons and add custom styles.
+    """
+    st.markdown(
     """
     .stAppDeployButton {
         display: none;
@@ -42,30 +50,45 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True,
-)
+    )
 
-styles = {
-    "nav": {
-        "background-color": "#60A54D",
-        "align-items": "center",
-        "font-family": "sans-serif",
-        "padding-top": "1rem",
-        "padding-bottom": "1rem",
-        "display": "flex",
-    },
-    "div": {"max-width": "100%"},
-    "span": {
-        "justify-content": "right",
-        "color": "#FFFFFF",
-        "font-weight": "normal",
-        "font-size": "14px",
-    },
-    "img": {"height": "50px", "width": "auto"},
-    "active": {"color": "#FFFFFF"},
-    "hover": {"color": "#FFFFFF"},
-}
+def get_navbar_styles() -> dict:
+    """
+    Get the styles for the navbar.
+    """
+    return {
+        "nav": {
+            "background-color": "#60A54D",
+            "align-items": "center",
+            "font-family": "sans-serif",
+            "padding-top": "1rem",
+            "padding-bottom": "1rem",
+            "display": "flex",
+        },
+        "div": {"max-width": "100%"},
+        "span": {
+            "justify-content": "right",
+            "color": "#FFFFFF",
+            "font-weight": "normal",
+            "font-size": "14px",
+        },
+        "img": {"height": "50px", "width": "auto"},
+        "active": {"color": "#FFFFFF"},
+        "hover": {"color": "#FFFFFF"},
+    }
 
-options = {"show_menu": False, "show_sidebar": False, "hide_nav": True}
+def get_options() -> dict:
+    """
+    Get the options for the navbar.
+    """
+    return {"show_menu": False, "show_sidebar": False, "hide_nav": True}
+
+def initialize_session_state() -> None:
+    """
+    Initialize the session state to store analysis results.
+    """
+    if "analysis_results" not in st.session_state:
+        st.session_state.analysis_results = None
 
 page = st_navbar(
     ["About"],
@@ -77,10 +100,6 @@ page = st_navbar(
     options=options,
     adjust=False,
 )
-# --- Initialize Session State ---
-# This ensures our results survive a rerun triggered by download buttons
-if "analysis_results" not in st.session_state:
-    st.session_state.analysis_results = None
 
 if page == "About":
     st.switch_page("pages/about.py")
@@ -101,6 +120,15 @@ load_dotenv()
 
 
 def validate_user_input(user_input: str) -> bool:
+    """
+    Validate the user input to ensure it's not empty and has valid Python syntax.
+
+    Args:
+    user_input (str): The user input to validate.
+
+    Returns:
+    bool: True if the input is valid, False otherwise.
+    """
     if not user_input.strip():
         st.warning("Please enter Python code.")
         st.stop()

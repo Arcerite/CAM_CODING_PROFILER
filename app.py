@@ -291,7 +291,7 @@ def main() -> None:
     """
     set_page_config()
     hide_streamlit_buttons()
-    page = st_navbar(
+    st_navbar(
         ["About"],
         "Home",
         logo_path="Images/logo2.svg",

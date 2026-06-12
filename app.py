@@ -106,16 +106,6 @@ if page == "About":
 elif page == "Home":
     pass
 
-with col1:
-    st.subheader("Source Code")
-    user_input = st.text_area(
-        "Paste Python code here:",
-        height=500,
-        placeholder=(
-            "def my_function(items):\n" "    for item in items:\n" "        print(item)"  # noqa: E501
-        ),
-    )
-
 load_dotenv()
 
 
@@ -143,90 +133,74 @@ def validate_user_input(user_input: str) -> bool:
     return True
 
 
-def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str):  # noqa: E501
-    # =========================
-    # Complexity
-    with st.expander(
-        "**Complexity**",
-        expanded=True,
-    ):
+def _render_complexity_section(analysis: Optional[dict]) -> None:
+    """Render the complexity analysis section."""
+    with st.expander("**Complexity**", expanded=True):
         if analysis is None:
             st.write("Please run the code analysis to find the complexity.")
         else:
             big_o = analysis.get("big_o", {})
             st.write(
-                f"Time Complexity: {big_o.get("time", "Unknown")}  \n",
-                f"Space Complexity: {big_o.get("space", "Unknown")}  \n\n",
-                big_o.get(
-                    "explanation",
-                    "No explanation provided.",
-                ),
+                f"Time Complexity: {big_o.get('time', 'Unknown')}  \n",
+                f"Space Complexity: {big_o.get('space', 'Unknown')}  \n\n",
+                big_o.get("explanation", "No explanation provided."),
             )
 
-    # Flaws
-    with st.expander(
-        "**Identified Flaws**",
-        expanded=False,
-    ):
+
+def _render_flaws_section(analysis: Optional[dict]) -> None:
+    """Render the identified flaws section."""
+    with st.expander("**Identified Flaws**", expanded=False):
         if analysis is None:
             st.write("Please run the code analysis to find flaws.")
         else:
             flaws = analysis.get("flaws", [])
-
             if flaws:
                 for flaw in flaws:
                     st.write(f"- {flaw}")
             else:
                 st.success("No major flaws detected.")
 
-    # Suggestions
-    with st.expander(
-        "**Suggestions**",
-        expanded=False,
-    ):
+
+def _render_suggestions_section(analysis: Optional[dict]) -> None:
+    """Render the suggestions section."""
+    with st.expander("**Suggestions**", expanded=False):
         if analysis is None:
             st.write("Please run the code analysis to find suggestions.")
         else:
-            suggestions = analysis.get(
-                "suggestions",
-                [],
-            )
-
+            suggestions = analysis.get("suggestions", [])
             if suggestions:
                 for suggestion in suggestions:
                     st.write(f"- {suggestion}")
             else:
                 st.success("No suggestions generated.")
 
-    # Refactored Code
-    with st.expander(
-        "**Refactored Code**",
-        expanded=False,
-    ):
+
+def _render_refactored_code_section(refactored_code: Optional[str]) -> None:
+    """Render the refactored code section."""
+    with st.expander("**Refactored Code**", expanded=False):
         if refactored_code is None:
             st.write("Please run the code analysis to get refactored code.")
         else:
-            st.code(
-                refactored_code,
-                language="python",
-            )
+            st.code(refactored_code, language="python")
 
-    # README
-    with st.expander(
-        "**Generated README**",
-        expanded=False,
-    ):
+
+def _render_readme_section(readme_content: Optional[str]) -> None:
+    """Render the generated README section."""
+    with st.expander("**Generated README**", expanded=False):
         if readme_content is None:
             st.write("Please run the code analysis to get the generated README.")
         else:
             st.markdown(readme_content)
 
-    # Downloads
+
+def _render_download_buttons(
+    refactored_code: Optional[str],
+    readme_content: Optional[str],
+) -> None:
+    """Render download buttons for code and README."""
     if (readme_content is not None) and (refactored_code is not None):
         st.markdown("---")
-
         d_col1, d_col2 = st.columns(2)
-
         with d_col1:
             st.download_button(
                 label="💾 Download Code",
@@ -235,7 +209,6 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
                 mime="text/x-python",
                 use_container_width=True,
             )
-
         with d_col2:
             st.download_button(
                 label="📖 Download README",
@@ -244,6 +217,20 @@ def render_analysis_ui(analysis: dict, refactored_code: str, readme_content: str
                 mime="text/markdown",
                 use_container_width=True,
             )
+
+
+def render_analysis_ui(
+    analysis: Optional[dict] = None,
+    refactored_code: Optional[str] = None,
+    readme_content: Optional[str] = None,
+):
+    """Render the analysis UI with all sections."""
+    _render_complexity_section(analysis)
+    _render_flaws_section(analysis)
+    _render_suggestions_section(analysis)
+    _render_refactored_code_section(refactored_code)
+    _render_readme_section(readme_content)
+    _render_download_buttons(refactored_code, readme_content)
 
 
 def analyze(user_input: str):
@@ -274,7 +261,7 @@ with col1:
     user_input = st.text_area(
         "Source Code",
         height=600,
-        placeholder=("Paste code here..."),
+        placeholder="Paste code here...",
         label_visibility="collapsed",
     )
 
@@ -285,7 +272,10 @@ with col1:
     )
 
 with col2:
-    st.markdown("<h3 style='text-align: center;'> Results</h3>", unsafe_allow_html=True)
+    st.markdown(
+        "<h3 style='text-align: center;'> Results</h3>",
+        unsafe_allow_html=True,
+    )
     if analyze_button:
         analyze(user_input)
 

@@ -66,7 +66,9 @@ def validate_analysis_response(data: Any) -> bool:
 
     if not isinstance(data, dict) or set(data.keys()) != required_keys:
         return False
-    if not isinstance(data["big_o"], dict) or set(data["big_o"].keys()) != big_o_keys:  # noqa: E501
+    if (
+        not isinstance(data["big_o"], dict) or set(data["big_o"].keys()) != big_o_keys
+    ):  # noqa: E501
         return False
     if not isinstance(data["flaws"], list) or not all(
         isinstance(i, str) for i in data["flaws"]
@@ -148,9 +150,7 @@ Requirements:
 - Improve readability
 - Improve security where possible
 """
-    user_prompt = (
-        f"Refactor the following code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
-    )
+    user_prompt = f"Refactor the following code.\n\n<SOURCE_CODE>\n{user_code}\n</SOURCE_CODE>"  # noqa: E501
     return _query_llm(system_prompt, user_prompt)
 
 

@@ -10,7 +10,7 @@ from streamlit_navigation_bar import st_navbar
 from analyzer import analyze_code, generate_readme, refactor_code
 
 
-def set_page_config() -> None:
+def _set_page_config() -> None:
     """
     Set the page configuration for the Streamlit app.
     """
@@ -22,7 +22,7 @@ def set_page_config() -> None:
     )
 
 
-def hide_streamlit_buttons() -> None:
+def _hide_streamlit_buttons() -> None:
     """
     Hide the Streamlit buttons and add custom styles.
     """
@@ -55,7 +55,7 @@ def hide_streamlit_buttons() -> None:
     )
 
 
-def get_navbar_styles() -> Dict[str, Dict[str, str]]:
+def _get_navbar_styles() -> Dict[str, Dict[str, str]]:
     """
     Get the styles for the navbar.
     """
@@ -81,14 +81,14 @@ def get_navbar_styles() -> Dict[str, Dict[str, str]]:
     }
 
 
-def get_options() -> Dict[str, bool]:
+def _get_options() -> Dict[str, bool]:
     """
     Get the options for the navbar.
     """
     return {"show_menu": False, "show_sidebar": False, "hide_nav": True}
 
 
-def initialize_session_state() -> None:
+def _initialize_session_state() -> None:
     """
     Initialize the session state to store analysis results.
     """
@@ -96,7 +96,7 @@ def initialize_session_state() -> None:
         st.session_state.analysis_results = None
 
 
-def validate_user_input(user_input: str) -> bool:
+def _validate_user_input(user_input: str) -> bool:
     """
     Validate the user input to ensure it's not empty and has valid Python syntax.
 
@@ -265,7 +265,7 @@ def analyze(user_input: str):
     Args:
         user_input (str): The user input code.
     """
-    if not validate_user_input(user_input):
+    if not _validate_user_input(user_input):
         return
 
     try:
@@ -289,21 +289,21 @@ def main() -> None:
     """
     Create the home page.
     """
-    set_page_config()
-    hide_streamlit_buttons()
+    _set_page_config()
+    _hide_streamlit_buttons()
     st_navbar(
         ["About"],
         "Home",
         logo_path="Images/logo2.svg",
         logo_page="Home",
         urls={"About": "https://github.com/Arcerite/CAM_CODING_PROFILER"},
-        styles=get_navbar_styles(),
-        options=get_options(),
+        styles=_get_navbar_styles(),
+        options=_get_options(),
         adjust=False,
     )
 
     load_dotenv()
-    initialize_session_state()
+    _initialize_session_state()
 
     col1, col2 = st.columns(2)
 

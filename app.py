@@ -81,7 +81,7 @@ def _get_navbar_styles() -> Dict[str, Dict[str, str]]:
     }
 
 
-def _get_options() -> Dict[str, bool]:
+def _get_navbar_options() -> Dict[str, bool]:
     """
     Get the options for the navbar.
     """
@@ -298,7 +298,7 @@ def main() -> None:
         logo_page="Home",
         urls={"About": "https://github.com/Arcerite/CAM_CODING_PROFILER"},
         styles=_get_navbar_styles(),
-        options=_get_options(),
+        options=_get_navbar_options(),
         adjust=False,
     )
 

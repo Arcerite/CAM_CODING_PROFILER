@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import ast
-from typing import Optional
+from typing import Dict, Optional
 
 import streamlit as st
 from dotenv import load_dotenv
@@ -9,15 +9,25 @@ from streamlit_navigation_bar import st_navbar
 
 from analyzer import analyze_code, generate_readme, refactor_code
 
-st.set_page_config(
-    page_title="Code Buddy",
-    page_icon="Images/smile_icon.png",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-)
 
-st.markdown(
+def set_page_config() -> None:
     """
+    Set the page configuration for the Streamlit app.
+    """
+    st.set_page_config(
+        page_title="Code Buddy",
+        page_icon="Images/smile_icon.png",
+        layout="wide",
+        initial_sidebar_state="collapsed",
+    )
+
+
+def hide_streamlit_buttons() -> None:
+    """
+    Hide the Streamlit buttons and add custom styles.
+    """
+    st.markdown(
+        """
     .stAppDeployButton {
         display: none;
     }
@@ -41,56 +51,61 @@ st.markdown(
     }
     </style>
     """,
-    unsafe_allow_html=True,
-)
+        unsafe_allow_html=True,
+    )
 
-styles = {
-    "nav": {
-        "background-color": "#60A54D",
-        "align-items": "center",
-        "font-family": "sans-serif",
-        "padding-top": "1rem",
-        "padding-bottom": "1rem",
-        "display": "flex",
-    },
-    "div": {"max-width": "100%"},
-    "span": {
-        "justify-content": "right",
-        "color": "#FFFFFF",
-        "font-weight": "normal",
-        "font-size": "14px",
-    },
-    "img": {"height": "50px", "width": "auto"},
-    "active": {"color": "#FFFFFF"},
-    "hover": {"color": "#FFFFFF"},
-}
 
-options = {"show_menu": False, "show_sidebar": False, "hide_nav": True}
+def get_navbar_styles() -> Dict[str, Dict[str, str]]:
+    """
+    Get the styles for the navbar.
+    """
+    return {
+        "nav": {
+            "background-color": "#60A54D",
+            "align-items": "center",
+            "font-family": "sans-serif",
+            "padding-top": "1rem",
+            "padding-bottom": "1rem",
+            "display": "flex",
+        },
+        "div": {"max-width": "100%"},
+        "span": {
+            "justify-content": "right",
+            "color": "#FFFFFF",
+            "font-weight": "normal",
+            "font-size": "14px",
+        },
+        "img": {"height": "50px", "width": "auto"},
+        "active": {"color": "#FFFFFF"},
+        "hover": {"color": "#FFFFFF"},
+    }
 
-page = st_navbar(
-    ["About"],
-    "Home",
-    logo_path="Images/logo2.svg",
-    logo_page="Home",
-    urls={"About": "https://github.com/Arcerite/CAM_CODING_PROFILER"},
-    styles=styles,
-    options=options,
-    adjust=False,
-)
-# --- Initialize Session State ---
-# This ensures our results survive a rerun triggered by download buttons
-if "analysis_results" not in st.session_state:
-    st.session_state.analysis_results = None
 
-if page == "About":
-    st.switch_page("pages/about.py")
-elif page == "Home":
-    pass
+def get_options() -> Dict[str, bool]:
+    """
+    Get the options for the navbar.
+    """
+    return {"show_menu": False, "show_sidebar": False, "hide_nav": True}
 
-load_dotenv()
+
+def initialize_session_state() -> None:
+    """
+    Initialize the session state to store analysis results.
+    """
+    if "analysis_results" not in st.session_state:
+        st.session_state.analysis_results = None
 
 
 def validate_user_input(user_input: str) -> bool:
+    """
+    Validate the user input to ensure it's not empty and has valid Python syntax.
+
+    Args:
+    user_input (str): The user input to validate.
+
+    Returns:
+    bool: True if the input is valid, False otherwise.
+    """
     if not user_input.strip():
         st.warning("Please enter Python code.")
         st.stop()
@@ -106,7 +121,12 @@ def validate_user_input(user_input: str) -> bool:
 
 
 def _render_complexity_section(analysis: Optional[dict]) -> None:
-    """Render the complexity analysis section."""
+    """
+    Render the complexity analysis section.
+
+    Args:
+        analysis (Optional[dict]): The analysis results.
+    """
     with st.expander("**Complexity**", expanded=True):
         if analysis is None:
             st.write("Please run the code analysis to find the complexity.")
@@ -120,7 +140,12 @@ def _render_complexity_section(analysis: Optional[dict]) -> None:
 
 
 def _render_flaws_section(analysis: Optional[dict]) -> None:
-    """Render the identified flaws section."""
+    """
+    Render the identified flaws section.
+
+    Args:
+        analysis (Optional[dict]): The analysis results.
+    """
     with st.expander("**Identified Flaws**", expanded=False):
         if analysis is None:
             st.write("Please run the code analysis to find flaws.")
@@ -134,7 +159,12 @@ def _render_flaws_section(analysis: Optional[dict]) -> None:
 
 
 def _render_suggestions_section(analysis: Optional[dict]) -> None:
-    """Render the suggestions section."""
+    """
+    Render the suggestions section.
+
+    Args:
+        analysis (Optional[dict]): The analysis results.
+    """
     with st.expander("**Suggestions**", expanded=False):
         if analysis is None:
             st.write("Please run the code analysis to find suggestions.")
@@ -148,7 +178,12 @@ def _render_suggestions_section(analysis: Optional[dict]) -> None:
 
 
 def _render_refactored_code_section(refactored_code: Optional[str]) -> None:
-    """Render the refactored code section."""
+    """
+    Render the refactored code section.
+
+    Args:
+        refactored_code (Optional[str]): The refactored code.
+    """
     with st.expander("**Refactored Code**", expanded=False):
         if refactored_code is None:
             st.write("Please run the code analysis to get refactored code.")
@@ -157,7 +192,12 @@ def _render_refactored_code_section(refactored_code: Optional[str]) -> None:
 
 
 def _render_readme_section(readme_content: Optional[str]) -> None:
-    """Render the generated README section."""
+    """
+    Render the generated README section.
+
+    Args:
+        readme_content (Optional[str]): The generated README content.
+    """
     with st.expander("**Generated README**", expanded=False):
         if readme_content is None:
             st.write("Please run the code analysis to get the generated README.")
@@ -169,7 +209,13 @@ def _render_download_buttons(
     refactored_code: Optional[str],
     readme_content: Optional[str],
 ) -> None:
-    """Render download buttons for code and README."""
+    """
+    Render download buttons for code and README.
+
+    Args:
+        refactored_code (Optional[str]): The refactored code.
+        readme_content (Optional[str]): The generated README content.
+    """
     if (readme_content is not None) and (refactored_code is not None):
         st.markdown("---")
         d_col1, d_col2 = st.columns(2)
@@ -196,7 +242,14 @@ def render_analysis_ui(
     refactored_code: Optional[str] = None,
     readme_content: Optional[str] = None,
 ):
-    """Render the analysis UI with all sections."""
+    """
+    Render the analysis UI with all sections.
+
+    Args:
+        analysis (Optional[dict]): The analysis results.
+        refactored_code (Optional[str]): The refactored code.
+        readme_content (Optional[str]): The generated README content.
+    """
     _render_complexity_section(analysis)
     _render_flaws_section(analysis)
     _render_suggestions_section(analysis)
@@ -206,6 +259,12 @@ def render_analysis_ui(
 
 
 def analyze(user_input: str):
+    """
+    Analyze the user input code.
+
+    Args:
+        user_input (str): The user input code.
+    """
     if not validate_user_input(user_input):
         return
 
@@ -226,38 +285,62 @@ def analyze(user_input: str):
         st.error(f"Analysis failed:\n{error}")
 
 
-col1, col2 = st.columns(2)
-
-with col1:
-    st.subheader("Source Code")
-    user_input = st.text_area(
-        "Source Code",
-        height=600,
-        placeholder="Paste code here...",
-        label_visibility="collapsed",
+def main() -> None:
+    """
+    Create the home page.
+    """
+    set_page_config()
+    hide_streamlit_buttons()
+    st_navbar(
+        ["About"],
+        "Home",
+        logo_path="Images/logo2.svg",
+        logo_page="Home",
+        urls={"About": "https://github.com/Arcerite/CAM_CODING_PROFILER"},
+        styles=get_navbar_styles(),
+        options=get_options(),
+        adjust=False,
     )
 
-    analyze_button = st.button(
-        "Analyze & Refactor",
-        type="primary",
-        use_container_width=True,
-    )
+    load_dotenv()
+    initialize_session_state()
 
-with col2:
-    st.markdown(
-        "<h3 style='text-align: center;'> Results</h3>",
-        unsafe_allow_html=True,
-    )
-    if analyze_button:
-        analyze(user_input)
+    col1, col2 = st.columns(2)
 
-    # 2. Check if we have saved results in session state to render
-    if st.session_state.analysis_results is not None:
-        results = st.session_state.analysis_results
-        render_analysis_ui(
-            analysis=results["analysis"],
-            refactored_code=results["refactored_code"],
-            readme_content=results["readme_content"],
+    with col1:
+        st.subheader("Source Code")
+        user_input = st.text_area(
+            "Source Code",
+            height=600,
+            placeholder="Paste code here...",
+            label_visibility="collapsed",
         )
-    else:
-        render_analysis_ui(None, None, None)
+
+        analyze_button = st.button(
+            "Analyze & Refactor",
+            type="primary",
+            use_container_width=True,
+        )
+
+    with col2:
+        st.markdown(
+            "<h3 style='text-align: center;'> Results</h3>",
+            unsafe_allow_html=True,
+        )
+        if analyze_button:
+            analyze(user_input)
+
+        # Check if we have saved results in session state to render
+        if st.session_state.analysis_results is not None:
+            results = st.session_state.analysis_results
+            render_analysis_ui(
+                analysis=results["analysis"],
+                refactored_code=results["refactored_code"],
+                readme_content=results["readme_content"],
+            )
+        else:
+            render_analysis_ui(None, None, None)
+
+
+if __name__ == "__main__":
+    main()

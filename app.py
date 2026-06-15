@@ -244,8 +244,8 @@ def main() -> None:
         logo_path="Images/logo-cascadia.svg",
         logo_page="Home",
         urls={"About": "https://github.com/Arcerite/CAM_CODING_PROFILER"},
-        styles=_get_navbar_styles(),
-        options=_get_navbar_options(),
+        styles=get_navbar_styles(),
+        options=get_navbar_options(),
         adjust=False,
     )
 

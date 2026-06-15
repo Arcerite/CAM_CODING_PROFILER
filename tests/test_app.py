@@ -92,10 +92,10 @@ def test_render_flaws_section_no_flaws(mock_st):
 
 
 def test_render_suggestions_no_suggestions():
-    """Ensure that the 'No suggestions generated.' message is shown when suggestions are empty."""
+    """Ensure that the 'No suggestions generated.' message is shown when suggestions are empty."""  # noqa: E501
     at = AppTest.from_file("app.py")
 
-    # Pre-populate the session state just like app.py expects, but with empty suggestions
+    # Pre-populate the session state just like app.py expects, but with empty suggestions # noqa: E501
     at.session_state.analysis_results = {
         "analysis": {
             "big_o": {"time": "O(1)", "space": "O(1)", "explanation": "Quick test"},
@@ -118,7 +118,7 @@ def test_render_suggestions_no_suggestions():
 
 
 def test_analyze_exception_handling():
-    """Ensure that if the backend processing crashes, the app catches the exception and displays an error."""
+    """Ensure that if the backend processing crashes, the app catches the exception and displays an error."""  # noqa: E501
 
     # Target where it's defined: 'analyzer.analyze_code'
     with patch("analyzer.analyze_code") as mock_analyze:

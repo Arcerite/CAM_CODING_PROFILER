@@ -63,7 +63,7 @@ def _get_navbar_styles() -> Dict[str, Dict[str, str]]:
         "nav": {
             "background-color": "var(--primary-color)",
             "align-items": "center",
-            "font-family": "var(--font)",
+            "font-family": "Cascadia Code",
             "padding-top": "1rem",
             "padding-bottom": "1rem",
             "display": "flex",

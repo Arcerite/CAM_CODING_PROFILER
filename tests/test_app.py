@@ -1,11 +1,13 @@
-import pytest
 from unittest.mock import patch
 
+import pytest
 from streamlit.testing.v1 import AppTest
+
 
 @pytest.fixture
 def app():
     return AppTest.from_file("app.py").run()
+
 
 def test_app_renders_properly(app):
     """Verify that the side-by-side layout loads up basic headers successfully."""
@@ -81,6 +83,7 @@ def test_empty_input_warning(app):
     # Check for the expected Streamlit warning box element
     assert len(app.warning) > 0
     assert "Please enter Python code." in app.warning[0].value
+
 
 def test_initial_session_state(app):
     assert "analysis_results" in app.session_state

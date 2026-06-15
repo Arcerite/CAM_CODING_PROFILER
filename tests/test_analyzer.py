@@ -2,7 +2,6 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 import streamlit as st
-
 from analyzer import (
     _query_llm, analyze_code, create_client, generate_readme, refactor_code,
     validate_analysis_response)

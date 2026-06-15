@@ -1,8 +1,7 @@
 from unittest.mock import patch
 
-from streamlit.testing.v1 import AppTest
-
 from app import _render_flaws_section
+from streamlit.testing.v1 import AppTest
 
 
 def test_app_renders_properly():

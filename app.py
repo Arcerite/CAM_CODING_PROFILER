@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from streamlit_navigation_bar import st_navbar
 
 from analyzer import analyze_code, generate_readme, refactor_code
-
+from utils import validate_user_input, get_navbar_styles, get_navbar_options
 
 def _set_page_config() -> None:
     """
@@ -55,69 +55,12 @@ def _hide_streamlit_buttons() -> None:
     )
 
 
-def _get_navbar_styles() -> Dict[str, Dict[str, str]]:
-    """
-    Get the styles for the navbar.
-    """
-    return {
-        "nav": {
-            "background-color": "var(--primary-color)",
-            "align-items": "center",
-            "font-family": "Cascadia Code",
-            "padding-top": "1rem",
-            "padding-bottom": "1rem",
-            "display": "flex",
-        },
-        "div": {"max-width": "100%"},
-        "span": {
-            "justify-content": "right",
-            "color": "var(--text-color)",
-            "font-weight": "normal",
-            "font-size": "14px",
-        },
-        "img": {"height": "50px", "width": "auto"},
-        "active": {"color": "var(--text-color)"},
-        "hover": {"color": "var(--text-color)"},
-    }
-
-
-def _get_navbar_options() -> Dict[str, bool]:
-    """
-    Get the options for the navbar.
-    """
-    return {"show_menu": False, "show_sidebar": False, "hide_nav": True}
-
-
 def _initialize_session_state() -> None:
     """
     Initialize the session state to store analysis results.
     """
     if "analysis_results" not in st.session_state:
         st.session_state.analysis_results = None
-
-
-def _validate_user_input(user_input: str) -> bool:
-    """
-    Validate the user input to ensure it's not empty and has valid Python syntax.
-
-    Args:
-    user_input (str): The user input to validate.
-
-    Returns:
-    bool: True if the input is valid, False otherwise.
-    """
-    if not user_input.strip():
-        st.warning("Please enter Python code.")
-        st.stop()
-    if len(user_input) > 15000:
-        st.error("Code is too large.")
-        return False
-    try:
-        ast.parse(user_input)
-    except SyntaxError as error:
-        st.error(f"Invalid Python syntax:\n{error}")
-        return False
-    return True
 
 
 def _render_complexity_section(analysis: Optional[dict]) -> None:
@@ -265,7 +208,10 @@ def analyze(user_input: str) -> None:
     Args:
         user_input (str): The user input code.
     """
-    if not _validate_user_input(user_input):
+    is_valid, error_msg = validate_user_input(user_input)
+
+    if not is_valid:
+        st.error(error_msg)
         return
 
     try:

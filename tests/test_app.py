@@ -81,8 +81,8 @@ def test_empty_input_warning(app):
     app.button[0].click().run()
 
     # Check for the expected Streamlit warning box element
-    assert len(app.warning) > 0
-    assert "Please enter Python code." in app.warning[0].value
+    assert len(app.error) > 0
+    assert "Please enter Python code." in app.error[0].value
 
 
 def test_initial_session_state(app):

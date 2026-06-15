@@ -1,5 +1,3 @@
-import pytest
-
 from utils import MAX_CODE_LENGTH, get_navbar_styles, validate_user_input
 
 

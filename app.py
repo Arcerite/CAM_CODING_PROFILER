@@ -61,10 +61,9 @@ def _get_navbar_styles() -> Dict[str, Dict[str, str]]:
     """
     return {
         "nav": {
-            "background-color": "#60A54D",
+            "background-color": "var(--primary-color)",
             "align-items": "center",
-            "font-family": "'Cascadia Code':https://fonts.googleapis.com"
-            + "/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&display=swap",
+            "font-family": "var(--font)",
             "padding-top": "1rem",
             "padding-bottom": "1rem",
             "display": "flex",
@@ -72,13 +71,13 @@ def _get_navbar_styles() -> Dict[str, Dict[str, str]]:
         "div": {"max-width": "100%"},
         "span": {
             "justify-content": "right",
-            "color": "#FFFFFF",
+            "color": "var(--text-color)",
             "font-weight": "normal",
             "font-size": "14px",
         },
         "img": {"height": "50px", "width": "auto"},
-        "active": {"color": "#FFFFFF"},
-        "hover": {"color": "#FFFFFF"},
+        "active": {"color": "var(--text-color)"},
+        "hover": {"color": "var(--text-color)"},
     }
 
 

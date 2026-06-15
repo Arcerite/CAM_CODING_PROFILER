@@ -1,6 +1,7 @@
 import ast
-from typing import Any, Dict
+from typing import Dict
 
+MAX_CODE_LENGTH = 15000
 
 def get_navbar_styles() -> Dict[str, Dict[str, str]]:
     """
@@ -47,7 +48,7 @@ def validate_user_input(user_input: str) -> tuple[bool, str]:
     """
     if not user_input.strip():
         return False, "Please enter Python code."
-    if len(user_input) > 15000:
+    if len(user_input) > MAX_CODE_LENGTH:
         return False, "Code is too large."
     try:
         ast.parse(user_input)

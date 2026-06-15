@@ -3,6 +3,7 @@ from typing import Dict
 
 MAX_CODE_LENGTH = 15000
 
+
 def get_navbar_styles() -> Dict[str, Dict[str, str]]:
     """
     Get the styles for the navbar.

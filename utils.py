@@ -1,5 +1,6 @@
 import ast
-from typing import Dict, Any
+from typing import Any, Dict
+
 
 def get_navbar_styles() -> Dict[str, Dict[str, str]]:
     """
@@ -26,11 +27,13 @@ def get_navbar_styles() -> Dict[str, Dict[str, str]]:
         "hover": {"color": "var(--text-color)"},
     }
 
+
 def get_navbar_options() -> Dict[str, bool]:
     """
     Get the options for the navbar.
     """
     return {"show_menu": False, "show_sidebar": False, "hide_nav": True}
+
 
 def validate_user_input(user_input: str) -> tuple[bool, str]:
     """

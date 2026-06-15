@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 from streamlit_navigation_bar import st_navbar
 
 from analyzer import analyze_code, generate_readme, refactor_code
-from utils import validate_user_input, get_navbar_styles, get_navbar_options
+from utils import get_navbar_options, get_navbar_styles, validate_user_input
+
 
 def _set_page_config() -> None:
     """

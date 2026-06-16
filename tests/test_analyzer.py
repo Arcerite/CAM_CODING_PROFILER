@@ -4,8 +4,13 @@ import pytest
 import streamlit as st
 
 from analyzer import (
-    _query_llm, analyze_code, create_client, generate_readme, refactor_code,
-    validate_analysis_response)
+    _query_llm,
+    analyze_code,
+    create_client,
+    generate_readme,
+    refactor_code,
+    validate_analysis_response,
+)
 
 # =====================================================================
 # 1. EXISTING TESTS (VALIDATE_ANALYSIS_RESPONSE) + EXTENDED BRANCHES

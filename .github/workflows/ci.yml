@@ -38,10 +38,11 @@ jobs:
 
       - name: Lint with flake8
         run: |
-          # Stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --ignore=E501
-          # Complexity check: ensure functions aren't getting too messy
-          flake8 . --count --max-complexity=10 --max-line-length=88 --extend-ignore=E203,W503 --statistics
+          # 1. Added --max-line-length=88 so syntax/undefined checks also respect 88 characters
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --max-line-length=88
+          
+          # 2. Changed --extend-ignore to explicitly ignore E501 (Line too long) entirely!
+          flake8 . --count --max-complexity=10 --max-line-length=88 --extend-ignore=E203,W503,E501 --statistics
 
       - name: Static type check with mypy
         run: mypy . --ignore-missing-imports

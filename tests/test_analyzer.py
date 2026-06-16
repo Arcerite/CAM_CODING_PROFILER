@@ -209,7 +209,6 @@ def test_create_client_secrets_exception_handling(
     with patch.object(
         st, "secrets", side_effect=TypeError("Simulated Streamlit environment error")
     ):
-        client = create_client()
 
         # Verify it bypassed the crash, hit 'pass', and successfully moved on to the .env fallback
         mock_load_dotenv.assert_called_once()

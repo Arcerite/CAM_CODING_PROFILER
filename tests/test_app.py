@@ -2,8 +2,6 @@ from unittest.mock import patch
 
 from streamlit.testing.v1 import AppTest
 
-from app import _render_flaws_section
-
 
 def test_app_renders_properly():
     """Verify that the side-by-side layout loads up basic headers successfully."""
@@ -59,19 +57,6 @@ def test_invalid_syntax_error_handling():
 
     # FIX: Assert against the session state content interceptor instead of an st.error box
     results = at.session_state.get("analysis_results")
-    assert results is not None
-    assert "Refactoring aborted" in results["refactored_code"]
-
-
-def test_invalid_syntax_error_handling():
-    """Verify that inputting broken code breaks gracefully via ast validation."""
-    at = AppTest.from_file("app.py").run()
-
-    at.text_area[0].input("def broken_function(").run()
-    at.button[0].click().run()
-
-    # FIX: Use direct square-bracket lookup instead of .get()
-    results = at.session_state["analysis_results"]
     assert results is not None
     assert "Refactoring aborted" in results["refactored_code"]
 

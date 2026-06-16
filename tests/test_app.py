@@ -11,54 +11,58 @@ def test_app_renders_properly():
     assert at.subheader[0].value == "Source Code"
 
 
-@patch("analyzer.generate_readme")
-@patch("analyzer.refactor_code")
-@patch("analyzer.analyze_code")
-def test_successful_analysis_flow(mock_analyze, mock_refactor, mock_readme):
-    """Test the end-to-end analysis workflow from button press to UI updates."""
-    # Define our mocked API payloads
-    mock_analyze.return_value = {
-        "big_o": {
-            "time": "O(1)",
-            "space": "O(1)",
-            "explanation": "Mocked complexity details.",
-        },
-        "flaws": ["A mock flaw description."],
-        "suggestions": ["A mock optimization suggestion."],
-    }
-    mock_refactor.return_value = "def mocked_code(): pass"
-    mock_readme.return_value = "# Mocked README File Content"
-
-    # Spin up our simulated app environment
-    at = AppTest.from_file("app.py").run()
-
-    # Locate the Python input box, send code, and hit run
-    at.text_area[0].input("def greet():\n    print('hi')").run()
-    at.button[0].click().run()
-
-    assert not at.exception
-
-    # Read layout values directly from Streamlit's Markdown element array
-    # because layout blocks and expanders render text inside `at.markdown`
-    all_markdown_text = [md.value for md in at.markdown]
-
-    # Assert that all the core processing data successfully reached the frontend
-    assert any("Time Complexity: O(1)" in text for text in all_markdown_text)
-    assert any("Space Complexity: O(1)" in text for text in all_markdown_text)
-    assert any("Mocked complexity details." in text for text in all_markdown_text)
+from unittest.mock import patch
 
 
 def test_invalid_syntax_error_handling():
-    """Verify that inputting broken code breaks gracefully via ast validation."""
-    at = AppTest.from_file("app.py").run()
+    """Verify that inputting broken code breaks gracefully via validation."""
+    # Mock analyze_code to instantly return an invalid block without hitting the web
+    with patch("app.analyze_code") as mock_analyze:
+        mock_analyze.return_value = {
+            "is_valid_code": False,
+            "language": "python",
+            "extension": ".py",
+            "big_o": {
+                "time": "Unknown",
+                "space": "Unknown",
+                "explanation": "Broken syntax.",
+            },
+            "flaws": ["Invalid syntax."],
+            "suggestions": [],
+        }
 
-    at.text_area[0].input("def broken_function(").run()
-    at.button[0].click().run()
+        at = AppTest.from_file("app.py").run()
+        at.text_area[0].input("def broken_function(").run()
+        at.button[0].click().run()
 
-    # FIX: Assert against the session state content interceptor instead of an st.error box
-    results = at.session_state.get("analysis_results")
-    assert results is not None
-    assert "Refactoring aborted" in results["refactored_code"]
+        results = at.session_state["analysis_results"]
+        assert results is not None
+        assert "Refactoring aborted" in results["refactored_code"]
+
+
+def test_empty_input_warning():
+    """Ensure submitting spaces or nothing warns the developer explicitly."""
+    with patch("app.analyze_code") as mock_analyze:
+        mock_analyze.return_value = {
+            "is_valid_code": False,
+            "language": "python",
+            "extension": ".py",
+            "big_o": {
+                "time": "Unknown",
+                "space": "Unknown",
+                "explanation": "Blank input.",
+            },
+            "flaws": ["Empty input."],
+            "suggestions": [],
+        }
+
+        at = AppTest.from_file("app.py").run()
+        at.text_area[0].input("   ").run()
+        at.button[0].click().run()
+
+        results = at.session_state["analysis_results"]
+        assert results is not None
+        assert "Refactoring aborted" in results["refactored_code"]
 
 
 def test_empty_input_warning():

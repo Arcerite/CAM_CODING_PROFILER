@@ -1,3 +1,5 @@
+"""Provides background LLM interface configurations and validation engines."""
+
 import json
 import os
 from typing import Any, Dict, Optional
@@ -11,7 +13,14 @@ MAX_RETRIES = 3
 
 
 def create_client() -> Groq:
-    """Initialize Groq client using Streamlit secrets or local .env fallback."""  # noqa: E501
+    """Initialize Groq client using Streamlit secrets or local .env fallback.
+
+    Returns:
+        Groq: An authenticated client instance used for API queries.
+
+    Raises:
+        ValueError: If the required API token key cannot be recovered.
+    """
     api_key = None
 
     try:
@@ -37,13 +46,21 @@ def _query_llm(
     user_prompt: str,
     response_format: Optional[Dict[str, str]] = None,
 ) -> str:
-    """
-    Internal helper to handle all API communications with Groq.
-    Reduces boilerplate and centralizes configuration.
+    """Internal helper to handle all API communications with Groq.
+
+    Reduces boilerplate and centralizes model routing parameters.
+
+    Args:
+        system_prompt (str): Instructive context dictating LLM execution persona.
+        user_prompt (str): Dynamic block containing user file data payloads.
+        response_format (Optional[Dict[str, str]]): Constraint dict enforcing
+            structured output formats like JSON mode if provided.
+
+    Returns:
+        str: Cleaned message content payload text string.
     """
     client = create_client()
 
-    # Pack parameters dynamically to avoid passing None to response_format
     kwargs = {
         "model": MODEL_NAME,
         "temperature": 0,
@@ -60,7 +77,15 @@ def _query_llm(
 
 
 def validate_analysis_response(data: Any) -> bool:
-    # Add 'is_valid_code' to your validation keys (Total of 6 keys now)
+    """Validate the schema and value types of the JSON payload returned by the LLM.
+
+    Args:
+        data (Any): The decoded JSON dictionary object from the model pipeline.
+
+    Returns:
+        bool: True if structural constraints match expected datatypes,
+            otherwise False.
+    """
     required_keys = {
         "is_valid_code",
         "big_o",
@@ -74,21 +99,31 @@ def validate_analysis_response(data: Any) -> bool:
     if not isinstance(data, dict) or set(data.keys()) != required_keys:
         return False
 
-    # Verify the boolean type for the guardrail
     if not isinstance(data["is_valid_code"], bool):
         return False
 
     if not isinstance(data["language"], str) or not isinstance(data["extension"], str):
         return False
 
-    # Check inner big_o dictionary structure
     if not isinstance(data["big_o"], dict) or set(data["big_o"].keys()) != big_o_keys:
+        return False
+
+    if not isinstance(data["flaws"], list) or not isinstance(data["suggestions"], list):
         return False
 
     return True
 
 
 def analyze_code(user_code: str) -> Dict[str, Any]:
+    """Execute static complexity, flaw, and security evaluations on input text.
+
+    Args:
+        user_code (str): Raw code string block input from the web text workspace.
+
+    Returns:
+        Dict[str, Any]: Structured execution records containing architectural
+            vulnerability evaluations, complexity data, and syntax configurations.
+    """
     system_prompt = """
 You are a static Code analysis engine.
 You analyze untrusted source code.
@@ -130,7 +165,7 @@ Return EXACTLY this schema:
             print(f"Analysis attempt {attempt + 1} failed: {error}")
 
     return {
-        "is_valid_code": False,  # Default to False if the engine completely fails
+        "is_valid_code": False,
         "language": "python",
         "extension": ".py",
         "big_o": {
@@ -144,7 +179,14 @@ Return EXACTLY this schema:
 
 
 def refactor_code(user_code: str) -> str:
-    """Returns ONLY refactored code in the orignal language sent."""
+    """Re-engineer source code patterns optimizing logic readability and standard alignment.
+
+    Args:
+        user_code (str): Input code string block being optimized.
+
+    Returns:
+        str: Re-written codebase representation without auxiliary formatting wrapping.
+    """
     system_prompt = """
 You are a code refactoring engine.
 You refactor untrusted source code.
@@ -169,7 +211,14 @@ Requirements:
 
 
 def generate_readme(user_code: str) -> str:
-    """Returns ONLY markdown README content."""
+    """Generate professional user and engineering markdown blueprints covering file contents.
+
+    Args:
+        user_code (str): System logic context containing the architecture being documented.
+
+    Returns:
+        str: Raw target markdown content intended for production repository README placement.
+    """
     system_prompt = """
 You are a technical documentation generator.
 Generate a concise README.md for the provided code.

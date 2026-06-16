@@ -1,19 +1,19 @@
+"""Orchestrates layout views and state interactions for the Streamlit dashboard."""
+
 from __future__ import annotations
 
-from typing import Optional
+from typing import Any, Dict, Optional
 
 import streamlit as st
 from dotenv import load_dotenv
 from streamlit_navigation_bar import st_navbar
 
 from analyzer import analyze_code, generate_readme, refactor_code
-from utils import get_navbar_options, get_navbar_styles
+from utils import MAX_CODE_LENGTH, get_navbar_options, get_navbar_styles
 
 
 def _set_page_config() -> None:
-    """
-    Set the page configuration for the Streamlit app.
-    """
+    """Set foundational global application visual parameters and title definitions."""
     st.set_page_config(
         page_title="Code Buddy",
         page_icon="Images/smile_icon.png",
@@ -23,9 +23,7 @@ def _set_page_config() -> None:
 
 
 def _hide_streamlit_buttons() -> None:
-    """
-    Hide the Streamlit buttons and add custom styles.
-    """
+    """Inject custom inline stylesheets removing core administrative button overlays."""
     st.markdown(
         """
     .stAppDeployButton {
@@ -56,19 +54,16 @@ def _hide_streamlit_buttons() -> None:
 
 
 def _initialize_session_state() -> None:
-    """
-    Initialize the session state to store analysis results.
-    """
+    """Safely populate persistent view dictionary instances across hot-reloads."""
     if "analysis_results" not in st.session_state:
         st.session_state.analysis_results = None
 
 
-def _render_complexity_section(analysis: Optional[dict]) -> None:
-    """
-    Render the complexity analysis section.
+def _render_complexity_section(analysis: Optional[Dict[str, Any]]) -> None:
+    """Render Algorithmic Big-O expansion metrics components.
 
     Args:
-        analysis (Optional[dict]): The analysis results.
+        analysis (Optional[Dict[str, Any]]): Decoded LLM metrics map, if available.
     """
     with st.expander("**Complexity**", expanded=True):
         if analysis is None:
@@ -82,12 +77,11 @@ def _render_complexity_section(analysis: Optional[dict]) -> None:
             )
 
 
-def _render_flaws_section(analysis: Optional[dict]) -> None:
-    """
-    Render the identified flaws section.
+def _render_flaws_section(analysis: Optional[Dict[str, Any]]) -> None:
+    """Render safety and optimization vulnerabilities found within the snippet.
 
     Args:
-        analysis (Optional[dict]): The analysis results.
+        analysis (Optional[Dict[str, Any]]): Decoded LLM metrics map, if available.
     """
     with st.expander("**Identified Flaws**", expanded=False):
         if analysis is None:
@@ -101,12 +95,11 @@ def _render_flaws_section(analysis: Optional[dict]) -> None:
                 st.success("No major flaws detected.")
 
 
-def _render_suggestions_section(analysis: Optional[dict]) -> None:
-    """
-    Render the suggestions section.
+def _render_suggestions_section(analysis: Optional[Dict[str, Any]]) -> None:
+    """Render enhancement suggestion queues targeting styling updates.
 
     Args:
-        analysis (Optional[dict]): The analysis results.
+        analysis (Optional[Dict[str, Any]]): Decoded LLM metrics map, if available.
     """
     with st.expander("**Suggestions**", expanded=False):
         if analysis is None:
@@ -123,20 +116,24 @@ def _render_suggestions_section(analysis: Optional[dict]) -> None:
 def _render_refactored_code_section(
     refactored_code: Optional[str], language: str = "python"
 ) -> None:
+    """Render syntax-highlighted refactored block code views.
+
+    Args:
+        refactored_code (Optional[str]): Processed optimization logic string.
+        language (str): Target text syntax type parsing target used by code blocks.
+    """
     with st.expander("**Refactored Code**", expanded=False):
         if refactored_code is None:
             st.write("Please run the code analysis to get refactored code.")
         else:
-            # Dynamically set syntax highlighting!
             st.code(refactored_code, language=language)
 
 
 def _render_readme_section(readme_content: Optional[str]) -> None:
-    """
-    Render the generated README section.
+    """Render generated documentation preview layers directly in browser frames.
 
     Args:
-        readme_content (Optional[str]): The generated README content.
+        readme_content (Optional[str]): Formatted markdown documentation block.
     """
     with st.expander("**Generated README**", expanded=False):
         if readme_content is None:
@@ -148,8 +145,15 @@ def _render_readme_section(readme_content: Optional[str]) -> None:
 def _render_download_buttons(
     refactored_code: Optional[str],
     readme_content: Optional[str],
-    extension: str = ".py",  # Pass the extension dynamically
+    extension: str = ".py",
 ) -> None:
+    """Render structural file assets streaming buttons cleanly under generated results columns.
+
+    Args:
+        refactored_code (Optional[str]): Source asset string bound for download.
+        readme_content (Optional[str]): Documentation string asset bound for download.
+        extension (str): Target filesystem text type suffix.
+    """
     if (readme_content is not None) and (refactored_code is not None):
         st.markdown("---")
         d_col1, d_col2 = st.columns(2)
@@ -157,7 +161,7 @@ def _render_download_buttons(
             st.download_button(
                 label="💾 Download Code",
                 data=refactored_code,
-                file_name=f"refactored_code{extension}",  # Dynamic extension!
+                file_name=f"refactored_code{extension}",
                 mime="text/plain",
                 use_container_width=True,
             )
@@ -172,14 +176,17 @@ def _render_download_buttons(
 
 
 def render_analysis_ui(
-    analysis: Optional[dict] = None,
+    analysis: Optional[Dict[str, Any]] = None,
     refactored_code: Optional[str] = None,
     readme_content: Optional[str] = None,
 ) -> None:
+    """Distribute metrics context records downstream across distinct view fragments.
+
+    Args:
+        analysis (Optional[Dict[str, Any]]): Decoded structural analytics map.
+        refactored_code (Optional[str]): Complete logic optimization code string.
+        readme_content (Optional[str]): Renderable markdown project summary text block.
     """
-    Render the analysis UI with all sections.
-    """
-    # 1. Extract the language and extension safely, defaulting to python if analysis is None
     if analysis:
         language = analysis.get("language", "python")
         extension = analysis.get("extension", ".py")
@@ -187,37 +194,36 @@ def render_analysis_ui(
         language = "python"
         extension = ".py"
 
-    # 2. Pass them into the respective sections
     _render_complexity_section(analysis)
     _render_flaws_section(analysis)
     _render_suggestions_section(analysis)
-
-    # Pass 'language' here so syntax highlighting changes
     _render_refactored_code_section(refactored_code, language=language)
-
     _render_readme_section(readme_content)
-
-    # Pass 'extension' here so the download button changes!
     _render_download_buttons(refactored_code, readme_content, extension=extension)
 
 
 def analyze(user_input: str) -> None:
+    """Orchestrate model analysis pipeline requests sequentially.
+
+    Args:
+        user_input (str): Target text block pulled from active browser text area frame.
+    """
+    if not user_input.strip():
+        st.warning("Please provide valid code input before running diagnostics.")
+        return
+
     try:
         with st.spinner("Analyzing code..."):
-            # 1. Run the analysis engine first as a gatekeeper
             analysis = analyze_code(user_input)
 
-            # 2. Check if the input is malicious or invalid code
             if not analysis.get("is_valid_code", True):
                 st.session_state.analysis_results = {
-                    # Keep the analysis so 'Identified Flaws' displays the injection warning
                     "analysis": analysis,
-                    "refactored_code": "Error: Input does not appear to be valid source code. Refactoring aborted.",
-                    "readme_content": "Error: Cannot generate documentation for invalid source code.",
+                    "refactored_code": "Error: Input does not appear to be valid source code. Refactoring aborted.",  # noqa: E501
+                    "readme_content": "Error: Cannot generate documentation for invalid source code.",  # noqa: E501
                 }
                 return
 
-            # 3. Only run these if the input safely passed validation
             refactored_code = refactor_code(user_input)
             readme_content = generate_readme(user_input)
 
@@ -232,9 +238,7 @@ def analyze(user_input: str) -> None:
 
 
 def main() -> None:
-    """
-    Create the home page.
-    """
+    """Build grid structures and interface layout entryways."""
     _set_page_config()
     _hide_streamlit_buttons()
     st_navbar(
@@ -257,6 +261,7 @@ def main() -> None:
         st.subheader("Source Code")
         user_input = st.text_area(
             "Source Code",
+            max_chars=MAX_CODE_LENGTH,
             height=600,
             placeholder="Paste code here...",
             label_visibility="collapsed",
@@ -276,7 +281,6 @@ def main() -> None:
         if analyze_button:
             analyze(user_input)
 
-        # Check if we have saved results in session state to render
         if st.session_state.analysis_results is not None:
             results = st.session_state.analysis_results
             render_analysis_ui(

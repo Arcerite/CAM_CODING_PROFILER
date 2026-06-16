@@ -2,6 +2,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 import streamlit as st
+
 from analyzer import (
     _query_llm, analyze_code, create_client, generate_readme, refactor_code,
     validate_analysis_response)
@@ -14,6 +15,9 @@ from analyzer import (
 def test_validate_analysis_response_success():
     """Test with a perfectly formatted dictionary."""
     valid_data = {
+        "is_valid_code": True,  # <-- Add this
+        "language": "python",  # <-- Add this
+        "extension": ".py",  # <-- Add this
         "big_o": {
             "time": "O(n)",
             "space": "O(1)",
@@ -141,7 +145,7 @@ def test_query_llm_with_response_format(mock_create_client):
 @patch("analyzer._query_llm")
 def test_analyze_code_success(mock_query):
     """Test analyze_code handles valid structured JSON returns successfully."""
-    mock_query.return_value = '{"big_o": {"time": "O(1)", "space": "O(1)", "explanation": "Good"}, "flaws": [], "suggestions": []}'
+    mock_query.return_value = '{"is_valid_code": true, "language": "python", "extension": ".py", "big_o": {"time": "O(1)", "space": "O(1)", "explanation": "Good"}, "flaws": [], "suggestions": []}'
 
     result = analyze_code("print('hello')")
     assert result["big_o"]["time"] == "O(1)"

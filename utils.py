@@ -1,4 +1,3 @@
-import ast
 from typing import Dict
 
 MAX_CODE_LENGTH = 15000
@@ -35,24 +34,3 @@ def get_navbar_options() -> Dict[str, bool]:
     Get the options for the navbar.
     """
     return {"show_menu": False, "show_sidebar": False, "hide_nav": True}
-
-
-def validate_user_input(user_input: str) -> tuple[bool, str]:
-    """
-    Validate the user input to ensure it's not empty and has valid Python syntax.
-
-    Args:
-    user_input (str): The user input to validate.
-
-    Returns:
-    bool: True if the input is valid, False otherwise.
-    """
-    if not user_input.strip():
-        return False, "Please enter Python code."
-    if len(user_input) > MAX_CODE_LENGTH:
-        return False, "Code is too large."
-    try:
-        ast.parse(user_input)
-    except SyntaxError as error:
-        return False, f"Invalid Python syntax:\n{error}"
-    return True, ""

@@ -200,7 +200,7 @@ def test_create_client_secrets_exception_handling():
     """Explicitly force st.secrets to throw an exception to hit the 'except Exception: pass' block."""
     with patch("analyzer.load_dotenv") as mock_load_dotenv, patch(
         "analyzer.os.getenv"
-    ) as mock_getenv, patch("analyzer.Groq") as mock_groq, patch.object(
+    ) as mock_getenv, patch("analyzer.Groq"), patch.object(
         st, "secrets", side_effect=TypeError("Simulated error")
     ):
 

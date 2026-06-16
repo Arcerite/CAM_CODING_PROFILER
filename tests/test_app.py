@@ -11,9 +11,6 @@ def test_app_renders_properly():
     assert at.subheader[0].value == "Source Code"
 
 
-from unittest.mock import patch
-
-
 def test_invalid_syntax_error_handling():
     """Verify that inputting broken code breaks gracefully via validation."""
     # Mock analyze_code to instantly return an invalid block without hitting the web
@@ -63,19 +60,6 @@ def test_empty_input_warning():
         results = at.session_state["analysis_results"]
         assert results is not None
         assert "Refactoring aborted" in results["refactored_code"]
-
-
-def test_empty_input_warning():
-    """Ensure submitting spaces or nothing warns the developer explicitly."""
-    at = AppTest.from_file("app.py").run()
-
-    at.text_area[0].input("   ").run()
-    at.button[0].click().run()
-
-    # FIX: Use direct square-bracket lookup instead of .get()
-    results = at.session_state["analysis_results"]
-    assert results is not None
-    assert "Refactoring aborted" in results["refactored_code"]
 
 
 def test_render_suggestions_no_suggestions():

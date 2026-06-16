@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from streamlit_navigation_bar import st_navbar
 
 from analyzer import analyze_code, generate_readme, refactor_code
-from utils import get_navbar_options, get_navbar_styles, validate_user_input
+from utils import get_navbar_options, get_navbar_styles
 
 
 def _set_page_config() -> None:
@@ -120,18 +120,15 @@ def _render_suggestions_section(analysis: Optional[dict]) -> None:
                 st.success("No suggestions generated.")
 
 
-def _render_refactored_code_section(refactored_code: Optional[str]) -> None:
-    """
-    Render the refactored code section.
-
-    Args:
-        refactored_code (Optional[str]): The refactored code.
-    """
+def _render_refactored_code_section(
+    refactored_code: Optional[str], language: str = "python"
+) -> None:
     with st.expander("**Refactored Code**", expanded=False):
         if refactored_code is None:
             st.write("Please run the code analysis to get refactored code.")
         else:
-            st.code(refactored_code, language="python")
+            # Dynamically set syntax highlighting!
+            st.code(refactored_code, language=language)
 
 
 def _render_readme_section(readme_content: Optional[str]) -> None:
@@ -151,14 +148,8 @@ def _render_readme_section(readme_content: Optional[str]) -> None:
 def _render_download_buttons(
     refactored_code: Optional[str],
     readme_content: Optional[str],
+    extension: str = ".py",  # Pass the extension dynamically
 ) -> None:
-    """
-    Render download buttons for code and README.
-
-    Args:
-        refactored_code (Optional[str]): The refactored code.
-        readme_content (Optional[str]): The generated README content.
-    """
     if (readme_content is not None) and (refactored_code is not None):
         st.markdown("---")
         d_col1, d_col2 = st.columns(2)
@@ -166,8 +157,8 @@ def _render_download_buttons(
             st.download_button(
                 label="💾 Download Code",
                 data=refactored_code,
-                file_name="refactored_code.py",
-                mime="text/x-python",
+                file_name=f"refactored_code{extension}",  # Dynamic extension!
+                mime="text/plain",
                 use_container_width=True,
             )
         with d_col2:
@@ -187,40 +178,49 @@ def render_analysis_ui(
 ) -> None:
     """
     Render the analysis UI with all sections.
-
-    Args:
-        analysis (Optional[dict]): The analysis results.
-        refactored_code (Optional[str]): The refactored code.
-        readme_content (Optional[str]): The generated README content.
     """
+    # 1. Extract the language and extension safely, defaulting to python if analysis is None
+    if analysis:
+        language = analysis.get("language", "python")
+        extension = analysis.get("extension", ".py")
+    else:
+        language = "python"
+        extension = ".py"
+
+    # 2. Pass them into the respective sections
     _render_complexity_section(analysis)
     _render_flaws_section(analysis)
     _render_suggestions_section(analysis)
-    _render_refactored_code_section(refactored_code)
+
+    # Pass 'language' here so syntax highlighting changes
+    _render_refactored_code_section(refactored_code, language=language)
+
     _render_readme_section(readme_content)
-    _render_download_buttons(refactored_code, readme_content)
+
+    # Pass 'extension' here so the download button changes!
+    _render_download_buttons(refactored_code, readme_content, extension=extension)
 
 
 def analyze(user_input: str) -> None:
-    """
-    Analyze the user input code.
-
-    Args:
-        user_input (str): The user input code.
-    """
-    is_valid, error_msg = validate_user_input(user_input)
-
-    if not is_valid:
-        st.error(error_msg)
-        return
-
     try:
         with st.spinner("Analyzing code..."):
+            # 1. Run the analysis engine first as a gatekeeper
             analysis = analyze_code(user_input)
+
+            # 2. Check if the input is malicious or invalid code
+            if not analysis.get("is_valid_code", True):
+                st.session_state.analysis_results = {
+                    # Keep the analysis so 'Identified Flaws' displays the injection warning
+                    "analysis": analysis,
+                    "refactored_code": "Error: Input does not appear to be valid source code. Refactoring aborted.",
+                    "readme_content": "Error: Cannot generate documentation for invalid source code.",
+                }
+                return
+
+            # 3. Only run these if the input safely passed validation
             refactored_code = refactor_code(user_input)
             readme_content = generate_readme(user_input)
 
-            # Save the raw outputs into session state
             st.session_state.analysis_results = {
                 "analysis": analysis,
                 "refactored_code": refactored_code,

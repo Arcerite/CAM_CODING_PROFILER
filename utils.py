@@ -1,11 +1,15 @@
+"""Provides shared constants and navigation presentation styling configurations."""
+
 from typing import Dict
 
 MAX_CODE_LENGTH = 15000
 
 
 def get_navbar_styles() -> Dict[str, Dict[str, str]]:
-    """
-    Get the styles for the navbar.
+    """Get CSS styling properties assigned to custom layout navigation bars.
+
+    Returns:
+        Dict[str, Dict[str, str]]: Nested style map elements driving navbar layout presentation properties.
     """
     return {
         "nav": {
@@ -30,7 +34,9 @@ def get_navbar_styles() -> Dict[str, Dict[str, str]]:
 
 
 def get_navbar_options() -> Dict[str, bool]:
-    """
-    Get the options for the navbar.
+    """Get active visibility configurations handling layout bar interactive behaviors.
+
+    Returns:
+        Dict[str, bool]: Dynamic UI flags toggling context display visibility structures.
     """
     return {"show_menu": False, "show_sidebar": False, "hide_nav": True}

@@ -1,4 +1,4 @@
-"""Unit tests verifying layout asset presentation matrices."""
+"""Unit tests verifying layout."""
 
 from utils import get_navbar_styles
 

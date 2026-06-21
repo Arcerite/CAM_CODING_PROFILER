@@ -6,17 +6,17 @@ Course: CIS 350</p>
 
 ## 1. Abstract
 
-Software development takes time and effort to do well, but **Code Buddy** aims to ease the task for developers of all skill-levels. **Code Buddy** is a website designed to help programmers create better code. Users simply upload their code and the code will be analyzed by AI to offer suggestions including Big O analysis, identified flaws, docstrings, comments, and coding conventions. Then, the user will be able to download the refactored code and the provided README. **Code Buddy** will not only save time, but it will also save developers from headaches by identifying flaws and possible bottlenecks before they arise.
+Software development takes time and effort to do well, but **Code Buddy** aims to ease the task for developers of all skill-levels. **Code Buddy** is a website designed to help programmers create better code. Users simply upload their code and the code will be analyzed by AI to offer suggestions including Big O analysis, identified flaws, comments, and coding conventions. Then, the user will be able to download the refactored code and the provided README. **Code Buddy** will not only save time, but it will also save developers from headaches by identifying flaws and possible bottlenecks before they arise.
 
 ## 2. Introduction
 
 Large Language Models have changed the way that software is developed, but trying to "vibe code" can easily turn into fighting with the model rather than creating quality software. Even if you code something functional with an LLM, it may be riddled with bugs and security risks. **Code Buddy** aims to use AI to build code faster and better without the headaches.
 
-**Code Buddy** is an intelligent Python source code analysis website built with Streamlit and powered by Groq (Qwen3). Once the user uploads their code, Groq will analyze it for time and space complexity, performance bottlenecks, security concerns, and PEP 8 violations. Our website will return the report with detailed explanations, a README file, and a new version of the code with type hints, docstrings, and improved readability. The user will be able to export the refactored code and documentation instantly as .py and .md files.
+**Code Buddy** is an intelligent source code analysis website built with Streamlit and powered by Groq (Llama 3.3). Once the user uploads their code, Groq will analyze it for time and space complexity, performance bottlenecks, security concerns, and style convention violations. Our website will return the report with detailed explanations, a README file, and a new version of the code with corrected errors and improved readability. The user will be able to export the refactored code and documentation instantly.
 
 ## 3. Architectural Design
 
-The **Code Buddy** website is built entirely with Python. The frontend uses the Streamlit library. The backend implements the LLM prompts, API integration with GroqCloud, and JSON response validation. The website takes in the user's pasted code or uploaded .py file to give to the Groq Qwen3 model to analyze. The Groq Qwen3 model returns a detailed report with explanations, a README file, and a new version of the code with type hints, docstrings, and improved readability. The user will be able to export the refactored code and documentation instantly as .py and .md files.
+The **Code Buddy** website is built entirely with Python. The frontend uses the Streamlit library. The backend implements the LLM prompts, API integration with GroqCloud, and JSON response validation. The website takes in the user's pasted code to give to the Groq Llama 3.3 model to analyze. The Groq Llama 3.3 model returns a detailed report with explanations, a README file, and a new version of the code with corrected errors and improved readability. The user will be able to export the refactored code and documentation instantly.
 
 ### 3.1 Class Diagram
 
@@ -41,42 +41,29 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
 
 ## 4. User Guide/Implementation
 
-### Prerequisites
+Users can access the application from any device with a web browser and internet connection. However, the application is designed for a desktop environment, so it is recommended to use "desktop mode" if using a mobile browser. If the application has not been accessed recently, it will need to "wake up"; this is normal and should only take around 15 seconds. The application can be accessed at the site: [c0de-buddy.streamlit.app](https://c0de-buddy.streamlit.app/).
 
-* A Groq API Key (Get one at console.groq.com)
-* Python 3.8 or higher
+<figure align="center">
+    <img src="Images/sleeping.png" alt="Sleeping site" />
+    <figcaption>Figure 4: Sleeping Application</figcaption>
+</figure>
 
-### Installation & Usage
+<figure align="center">
+    <img src="Images/codebuddy_site.png" alt="Code Buddy Site" />
+    <figcaption>Figure 5: Code Buddy Site</figcaption>
+</figure>
 
-1. Clone the repository:
+Users can then paste their code into the input box and click "Analyze & Refactor". This will run the code analysis. Once the code analysis has run, users can open the expander boxes to read the complexity, identified flaws, suggestions, and generated README. Users may also scroll down to find the buttons to download the README as an Markdown file and the refactored code as a file corresponding to the uploaded language.
 
-    ```bash
-   git clone https://github.com/Arcerite/CAM_CODING_PROFILER
-    ```
+<figure align="center">
+    <img src="Images/user_input1.png" alt="Site with user input" />
+    <figcaption>Figure 6: Code Buddy Code Analysis</figcaption>
+</figure>
 
-2. Navigate to the repository's directory:
-
-   ```bash
-   cd ./CAM_CODING_PROFILER
-   ```
-
-3. Install dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Configure Environment: Create a .env file and add
-
-    ```bash
-    GROQ_API_KEY=your_key_here
-    ```
-
-5. Run the App:
-
-    ```python
-    python -m streamlit run app.py
-    ```
+<figure align="center">
+    <img src="Images/user_input2.png" alt="Site with user input" />
+    <figcaption>Figure 7: Code Buddy Refactored Code and Generated README</figcaption>
+</figure>
 
 ## 5. Risk Analysis and Retrospective
 

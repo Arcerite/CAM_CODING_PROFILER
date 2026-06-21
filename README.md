@@ -27,43 +27,43 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
 
 ### 3.2 Use Case Diagram
 
-<figure align="center">
+<p align="center">
     <img src="UML/usecase_diagram.png" alt="Use Case Diagram" />
-    <figcaption>Figure 2: Use Case Diagram</figcaption>
-</figure>
+    Figure 2: Use Case Diagram
+</p>
 
 ### 3.3 Sequence Diagram
 
-<figure align="center">
+<p align="center">
     <img src="UML/sequence_diagram.png" alt="Sequence Diagram" />
-    <figcaption>Figure 3: Sequence Diagram</figcaption>
-</figure>
+    Figure 3: Sequence Diagram
+</p>
 
 ## 4. User Guide/Implementation
 
 Users can access the application from any device with a web browser and internet connection. However, the application is designed for a desktop environment, so it is recommended to use "desktop mode" if using a mobile browser. If the application has not been accessed recently, it will need to "wake up"; this is normal and should only take around 15 seconds. The application can be accessed at the site: [c0de-buddy.streamlit.app](https://c0de-buddy.streamlit.app/).
 
-<figure align="center">
+<p align="center">
     <img src="Images/sleeping.png" alt="Sleeping site" />
-    <figcaption>Figure 4: Sleeping Application</figcaption>
-</figure>
+    Figure 4: Sleeping Application
+</p>
 
-<figure align="center">
+<p align="center">
     <img src="Images/codebuddy_site.png" alt="Code Buddy Site" />
-    <figcaption>Figure 5: Code Buddy Site</figcaption>
-</figure>
+    Figure 5: Code Buddy Site
+</p>
 
 Users can then paste their code into the input box and click "Analyze & Refactor". This will run the code analysis. Once the code analysis has run, users can open the expander boxes to read the complexity, identified flaws, suggestions, and generated README. Users may also scroll down to find the buttons to download the README as an Markdown file and the refactored code as a file corresponding to the uploaded language.
 
-<figure align="center">
+<p align="center">
     <img src="Images/user_input1.png" alt="Site with user input" />
-    <figcaption>Figure 6: Code Buddy Code Analysis</figcaption>
-</figure>
+    Figure 6: Code Buddy Code Analysis
+</p>
 
-<figure align="center">
+<p align="center">
     <img src="Images/user_input2.png" alt="Site with user input" />
-    <figcaption>Figure 7: Code Buddy Refactored Code and Generated README</figcaption>
-</figure>
+    Figure 7: Code Buddy Refactored Code and Generated README
+</p>
 
 ## 5. Risk Analysis and Retrospective
 

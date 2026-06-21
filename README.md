@@ -22,7 +22,7 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
 
 <figure align="center">
     <img src="UML/class_diagram.png" alt="Use Case Diagram" />
-    <figcaption>Figure 1: Class Diagram</figcaption>
+    Figure 1: Class Diagram
 </figure>
 
 ### 3.2 Use Case Diagram

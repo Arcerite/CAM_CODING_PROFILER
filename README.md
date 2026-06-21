@@ -67,7 +67,7 @@ Users can then paste their code into the input box and click "Analyze & Refactor
 
 ## 5. Risk Analysis and Retrospective
 
-Issues in the beginning of the project were prompt injections and hallucinations. These risked returning broken code to the user. In order to solve this issue, we used the LLM to re-analyze the analysis while being wary of managing our API rate limits. 
+Issues in the beginning of the project were prompt injections and hallucinations. These risked returning broken code to the user. In order to solve this issue, we used the LLM to re-analyze the analysis while being wary of managing our API rate limits.
 
 Later in the development, we struggled with our continuous integration automation. Almost all of our code was prevented from being deployed due to linting issues. We dealt with this by making sure we used the same version of linting as the CI so that we could see the issues before we push the code.
 

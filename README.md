@@ -77,7 +77,7 @@ It would have been better if we had anticipated the risk of hallucinations and p
 
 ## 6. Future Scope
 
-To be added...
+Due to time constraints, we were not able to implement all the features that we had in mind. In the future, we would like to allow the user to upload a file of their code for analysis along with the option to paste it. We would also like to include syntax highlighting and line numbers to the code input box. Finally, we would like to implement an options menu where the user can choose which aspects they would like **Code Buddy** to feature in the analysis.
 
 ## 7. Conclusion
 

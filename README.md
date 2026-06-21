@@ -67,7 +67,13 @@ Users can then paste their code into the input box and click "Analyze & Refactor
 
 ## 5. Risk Analysis and Retrospective
 
-To be added...
+Issues in the beginning of the project were prompt injections and hallucinations. These risked returning broken code to the user. In order to solve this issue, we used the LLM to re-analyze the analysis while being wary of managing our API rate limits. 
+
+Later in the development, we struggled with our continuous integration automation. Almost all of our code was prevented from being deployed due to linting issues. We dealt with this by making sure we used the same version of linting as the CI so that we could see the issues before we push the code.
+
+In the final phase of our project, our biggest issue was updating our unit tests to reflect changes in our code. We changed the architecture of our project which caused our unit tests to no longer function. We fixed this by updating our unit tests to reflect the new architecture.
+
+It would have been better if we had anticipated the risk of hallucinations and prompt injections in the design phase of our prototype, so we could have already had a plan to mitigate the vulnerability. Furthermore, given more time, we could implement more robust mitigation of the prompt injection and hallucination risks. Next time, we will also know to use static versions of the lint checkers rather than the latest versions. Finally, in the future, we will know to run unit tests before pushing the code.
 
 ## 6. Future Scope
 

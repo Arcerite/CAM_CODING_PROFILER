@@ -20,10 +20,10 @@ The **Code Buddy** website is built entirely with Python. The frontend uses the 
 
 ### 3.1 Class Diagram
 
-<figure align="center">
+<p align="center">
     <img src="UML/class_diagram.png" alt="Use Case Diagram" />
     Figure 1: Class Diagram
-</figure>
+</p>
 
 ### 3.2 Use Case Diagram
 

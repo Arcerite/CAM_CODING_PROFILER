@@ -85,4 +85,4 @@ Due to time constraints, we were not able to implement all the features that we 
 
 ## 8. Demo
 
-A demo of CodeBuddy can be found [here](https://drive.google.com/file/d/1P79SIrx0Czq-IJQZPs77u6bFWoPD2eHR/view?usp=sharing).
+A demo of CodeBuddy can be found [in this video](https://drive.google.com/file/d/1P79SIrx0Czq-IJQZPs77u6bFWoPD2eHR/view?usp=sharing).

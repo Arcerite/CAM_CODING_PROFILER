@@ -83,6 +83,6 @@ Due to time constraints, we were not able to implement all the features that we 
 
 **Code Buddy** has achieved the goal of providing AI powered code profiling. By allowing users to input their code for feedback and refactoring, software development is made easier and more efficient than before. We believe this site is a great tool to aid developers of all backgrounds and skill levels.
 
-## 8. Walkthrough
+## 8. Demo
 
-To be added...
+A demo of CodeBuddy can be found [here](https://drive.google.com/file/d/1P79SIrx0Czq-IJQZPs77u6bFWoPD2eHR/view?usp=sharing).
